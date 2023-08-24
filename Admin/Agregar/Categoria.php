@@ -1,23 +1,17 @@
-<?php require('./header.php') ?>
 <?php 
 
 require('../../../database.php');
 
-// Inicializamos una variable de mensaje vacía
 $mensaje = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // Recoger datos del formulario
     $nombreCat = $_POST['nombreCat'];
     $descripcionCat = $_POST['descripcionCat'];
     $idEstatus = $_POST['idEstatus'];
 
-    // Validación de datos
     if(empty($nombreCat) || empty($idEstatus)) {
         $mensaje = "Por favor, completa todos los campos obligatorios.";
     } else {
-        // Insertar en la base de datos
         $stmt = $conn->prepare("INSERT INTO TCategorias (NombreCat, DescripcionCat, IdEstatus) VALUES (?, ?, ?)");
         $stmt->bind_param("ssi", $nombreCat, $descripcionCat, $idEstatus);
 
@@ -31,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Consulta para obtener los estatus disponibles
 $query = "SELECT IdEstatus, Descripcion FROM TEstatus";
 $result = $conn->query($query);
 
@@ -43,6 +36,51 @@ $result = $conn->query($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Categoría</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 50px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        p {
+            background-color: #ffc107;
+            color: #333;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
 
@@ -53,12 +91,10 @@ $result = $conn->query($query);
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
     <label for="nombreCat">Nombre de la Categoría:</label>
     <input type="text" id="nombreCat" name="nombreCat" required>
-    <br>
-
+    
     <label for="descripcionCat">Descripción:</label>
     <textarea id="descripcionCat" name="descripcionCat" rows="4"></textarea>
-    <br>
-
+    
     <label for="idEstatus">Estatus:</label>
     <select id="idEstatus" name="idEstatus">
         <?php 
@@ -69,11 +105,9 @@ $result = $conn->query($query);
         }
         ?>
     </select>
-    <br>
-
+    
     <input type="submit" value="Agregar Categoría">
 </form>
 
 </body>
 </html>
-<?php require('./footer.php') ?>
