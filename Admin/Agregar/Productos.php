@@ -32,9 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         move_uploaded_file($_FILES['imagen']['tmp_name'], $directorioImagenes . $nombreImagen);
     }
     
+    // Esta es la ruta relativa que se almacenará en la base de datos
+    $rutaRelativa = "/roberto/img/" . $nombreImagen;
 
     $stmt = $conn->prepare("INSERT INTO TProductos (NombreProd, IdCategoria, Precio, RutaImagen) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("sids", $nombreProd, $idCategoria, $precio, $nombreImagen);
+    $stmt->bind_param("sids", $nombreProd, $idCategoria, $precio, $rutaRelativa);
 
     if($stmt->execute()) {
         $mensaje = "Producto agregado con éxito!";
