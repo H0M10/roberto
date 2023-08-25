@@ -8,6 +8,8 @@ $success = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idTipo = $_POST['idTipo'];
     $nombreUsu = $_POST['nombreUsu'];
+    $apellidoPUsu = $_POST['apellidoPUsu'];
+    $apellidoMUsu = $_POST['apellidoMUsu'];
     $correoUsu = $_POST['correoUsu'];
     $cuentaUsu = $_POST['cuentaUsu'];
     $contrasenaUsu = $_POST['contrasenaUsu'];
@@ -15,12 +17,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefonoUsu = $_POST['telefonoUsu'];
     $generoUsu = $_POST['generoUsu'];
     $idEstatus = $_POST['idEstatus'];
-    $fechaRegistroUsu = $_POST['fechaRegistroUsu'];
+    
+    
 
-    $stmt = $conn->prepare("INSERT INTO TUsuario (IdTipo, NombreUsu, CorreoUsu, CuentaUsu, ContrasenaUsu, DireccionUsu, TelefonoUsu, GeneroUsu, IdEstatus, FechaRegistroUsu, IdSucursalSeleccionada) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)");
-    $stmt->bind_param("isssssssis", $idTipo, $nombreUsu, $correoUsu, $cuentaUsu, $contrasenaUsu, $direccionUsu, $telefonoUsu, $generoUsu, $idEstatus, $fechaRegistroUsu);
+    $stmt = $conn->prepare("INSERT INTO TUsuario (IdTipo, NombreUsu, ApellidoPUsu, ApellidoMUsu, CorreoUsu, CuentaUsu, ContrasenaUsu, DireccionUsu, TelefonoUsu, GeneroUsu, IdEstatus, FechaRegistroUsu, IdSucursalSeleccionada) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURDATE(), NULL)");
+    $stmt->bind_param("isssssssiss", $idTipo, $nombreUsu, $apellidoPUsu, $apellidoMUsu, $correoUsu, $cuentaUsu, $contrasenaUsu, $direccionUsu, $telefonoUsu, $generoUsu, $idEstatus);;
     $success = $stmt->execute();
-    $stmt->close();
+    
+$success = $stmt->execute();
+$stmt->close();
 }
 
 $query_tipos = "SELECT IdTipo, Descripcion FROM TTipoUsuario";
@@ -58,6 +63,10 @@ $result_sucursales = $conn->query($query_sucursales);
 
     <label for="nombreUsu">Nombre:</label>
     <input type="text" name="nombreUsu" required>
+                            <label>Apellido Paterno:</label>
+                            <input type="text" name="apellidoPUsu" required>
+                            <label>Apellido Materno:</label>
+                            <input type="text" name="apellidoMUsu" required>
 
     <label for="correoUsu">Correo:</label>
     <input type="email" name="correoUsu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
@@ -87,8 +96,7 @@ $result_sucursales = $conn->query($query_sucursales);
         <?php endwhile; ?>
     </select>
 
-    <label for="fechaRegistroUsu">Fecha de Registro:</label>
-    <input type="date" name="fechaRegistroUsu" required>
+    
 
     
 

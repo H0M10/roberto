@@ -3,10 +3,15 @@
 
 <?php 
 require 'C:/xampp/htdocs/base_de_datos/database.php';
-$query = "SELECT u.IdUsuario, u.NombreUsu, u.CorreoUsu, u.CuentaUsu, u.DireccionUsu, u.TelefonoUsu, u.GeneroUsu, u.IdEstatus, e.Descripcion AS DescripcionEstatus
+$query = "SELECT u.IdUsuario, u.NombreUsu, u.ApellidoPUsu, u.ApellidoMUsu, u.CorreoUsu, u.CuentaUsu, u.DireccionUsu, u.TelefonoUsu, u.GeneroUsu, u.IdEstatus, e.Descripcion AS DescripcionEstatus
 FROM TUsuario AS u
 INNER JOIN TEstatus AS e ON u.IdEstatus = e.IdEstatus;";
 $result = $conn->query($query);
+
+if (!$result) {
+    die("SQL Error: " . $conn->error);
+}
+
 ?>
 
 <style>
@@ -59,6 +64,8 @@ $result = $conn->query($query);
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
+                                <th>Apellido Paterno</th>
+                                <th>Apellido Materno</th>
                                 <th>Telefono</th>
                                 <th>Direccion</th>
                                 <th>Email</th>
@@ -73,6 +80,8 @@ $result = $conn->query($query);
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
+                                <th>Apellido Paterno</th>
+                                <th>Apellido Materno</th>
                                 <th>Telefono</th>
                                 <th>Direccion</th>
                                 <th>Email</th>
@@ -90,6 +99,8 @@ $result = $conn->query($query);
                                     echo "<tr>";
                                     echo "<td>{$row['IdUsuario']}</td>";
                                     echo "<td>{$row['NombreUsu']}</td>";
+                                    echo "<td>{$row['ApellidoPUsu']}</td>";
+                                    echo "<td>{$row['ApellidoMUsu']}</td>";
                                     echo "<td>{$row['TelefonoUsu']}</td>";
                                     echo "<td>{$row['DireccionUsu']}</td>";
                                     echo "<td>{$row['CorreoUsu']}</td>";

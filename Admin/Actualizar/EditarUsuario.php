@@ -1,6 +1,5 @@
 
 <?php require('../layout/header.php') ?>
-
 <?php 
 require 'C:/xampp/htdocs/base_de_datos/database.php';
 
@@ -9,7 +8,7 @@ $selected_usuario = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['loadUsuario'])) {
     $idUsuario = $_POST['idUsuario'];
-    $stmt = $conn->prepare("SELECT * FROM TUsuario WHERE IdUsuario=?");
+    $stmt = $conn->prepare("SELECT IdUsuario, IdTipo, NombreUsu, ApellidoPUsu, ApellidoMUsu, CorreoUsu, CuentaUsu, ContrasenaUsu, DireccionUsu, TelefonoUsu, GeneroUsu, IdEstatus, FechaRegistroUsu, IdSucursalSeleccionada FROM TUsuario WHERE IdUsuario=?");
     $stmt->bind_param("i", $idUsuario);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -18,6 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['loadUsuario'])) {
 } elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateUsuario"])) {
     $idUsuario = $_POST['idUsuario'];
     $nombreUsu = $_POST['nombreUsu'];
+    $apellidoPUsu = $_POST['apellidoPUsu'];
+    $apellidoMUsu = $_POST['apellidoMUsu'];
     $correoUsu = $_POST['correoUsu'];
     $cuentaUsu = $_POST['cuentaUsu'];
     $contrasenaUsu = $_POST['contrasenaUsu'];
@@ -29,8 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['loadUsuario'])) {
     if(empty($nombreUsu) || empty($correoUsu) || empty($cuentaUsu) || empty($idEstatus) || empty($idUsuario)) {
         $mensaje = "Por favor, completa todos los campos obligatorios.";
     } else {
-        $stmt = $conn->prepare("UPDATE TUsuario SET NombreUsu=?, CorreoUsu=?, CuentaUsu=?, ContrasenaUsu=?, DireccionUsu=?, TelefonoUsu=?, GeneroUsu=?, IdEstatus=? WHERE IdUsuario=?");
-        $stmt->bind_param("sssssssii", $nombreUsu, $correoUsu, $cuentaUsu, $contrasenaUsu, $direccionUsu, $telefonoUsu, $generoUsu, $idEstatus, $idUsuario);
+        $stmt = $conn->prepare("UPDATE TUsuario SET NombreUsu=?, ApellidoPUsu=?, ApellidoMUsu=?, CorreoUsu=?, CuentaUsu=?, ContrasenaUsu=?, DireccionUsu=?, TelefonoUsu=?, GeneroUsu=?, IdEstatus=? WHERE IdUsuario=?");
+        $stmt->bind_param("ssssssssisi", $nombreUsu, $apellidoPUsu, $apellidoMUsu, $correoUsu, $cuentaUsu, $contrasenaUsu, $direccionUsu, $telefonoUsu, $generoUsu, $idEstatus, $idUsuario);
         $success = $stmt->execute();
         if(!$success) {
             $mensaje = "Error al actualizar el usuario: " . $stmt->error;
@@ -75,7 +76,11 @@ $result_estatus = $conn->query($query_estatus);
     <input type="submit" name="loadUsuario" value="Cargar Datos" onclick="removeRequired()">
 
     <label for="nombreUsu">Nombre:</label>
-    <input type="text" name="nombreUsu" value="<?php echo $selected_usuario['NombreUsu'] ?? ''; ?>" required>
+    <input type="text" name="nombreUsu" value="<?php echo $selected_usuario['NombreUsu'] ?? ''; ?>">
+<label>Apellido Paterno:</label>
+<input type="text" name="apellidoPUsu" value="<?php echo $selected_usuario['ApellidoPUsu'] ?? ''; ?>">
+<label>Apellido Materno:</label>
+<input type="text" name="apellidoMUsu" value="<?php echo $selected_usuario['ApellidoMUsu'] ?? ''; ?>">
 
     <label for="correoUsu">Correo Electrónico:</label>
     <input type="email" name="correoUsu" value="<?php echo $selected_usuario['CorreoUsu'] ?? ''; ?>" required>
