@@ -22,8 +22,8 @@ $result = $conn->query($query);
                     <i class="fas fa-table me-1"></i>
                     Sucursales alojadas en la base de datos.
                 </div>
-                <div class="">
-                    <table>
+                <div class="card-body">
+                                <table id="datatablesSimple">
                         <thead>
                             <tr>
                                 <th>ID</th>

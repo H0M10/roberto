@@ -1,7 +1,6 @@
-
 <?php require('../layout/header.php') ?>
 
-<?php 
+<?php
 require 'C:/xampp/htdocs/base_de_datos/database.php';
 $query = "SELECT u.IdUsuario, u.NombreUsu, u.ApellidoPUsu, u.ApellidoMUsu, u.CorreoUsu, u.CuentaUsu, u.DireccionUsu, u.TelefonoUsu, u.GeneroUsu, u.IdEstatus, e.Descripcion AS DescripcionEstatus
 FROM TUsuario AS u
@@ -13,39 +12,7 @@ if (!$result) {
 }
 
 ?>
-<<<<<<< HEAD
 
-<style>
-    /* Adjusted body padding to accommodate the header */
-    body {
-        padding-top: 150px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    th,
-    td {
-        padding: 10px;
-        border: 1px solid #ddd;
-        text-align: left;
-    }
-
-    th {
-        background-color: #333;
-        color: #fff;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-</style>
-=======
->>>>>>> e71384a561ed0835e6fec7e2b9ac8a1538634f3d
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
@@ -59,15 +26,11 @@ if (!$result) {
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
-                  Usuarios alojados en la base de datos.
+                    Usuarios alojados en la base de datos.
                 </div>
-<<<<<<< HEAD
-                <div class="">
-                    <table>
-=======
-                <div class="card-body">  
+                <div class="card-body">
                     <table id="datatablesSimple">
->>>>>>> e71384a561ed0835e6fec7e2b9ac8a1538634f3d
+
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -117,7 +80,6 @@ if (!$result) {
                                     echo "<td>{$row['DescripcionEstatus']}</td>";
                                     echo "<td><a href='../Actualizar/EditarUsuario.php?id={$row['IdUsuario']}' class='btn btn-primary'>Editar</a></td>";
                                     echo "</tr>";
-            
                                 }
                             } else {
                                 echo "<tr><td colspan='5'>No hay productos registrados.</td></tr>";
