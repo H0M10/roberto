@@ -13,6 +13,7 @@ if (!$result) {
 }
 
 ?>
+<<<<<<< HEAD
 
 <style>
     /* Adjusted body padding to accommodate the header */
@@ -43,6 +44,8 @@ if (!$result) {
         background-color: #f2f2f2;
     }
 </style>
+=======
+>>>>>>> e71384a561ed0835e6fec7e2b9ac8a1538634f3d
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
@@ -58,8 +61,13 @@ if (!$result) {
                     <i class="fas fa-table me-1"></i>
                   Usuarios alojados en la base de datos.
                 </div>
+<<<<<<< HEAD
                 <div class="">
                     <table>
+=======
+                <div class="card-body">  
+                    <table id="datatablesSimple">
+>>>>>>> e71384a561ed0835e6fec7e2b9ac8a1538634f3d
                         <thead>
                             <tr>
                                 <th>ID</th>

@@ -7,6 +7,7 @@ FROM TSucursal AS s
 INNER JOIN TEstatus AS e ON s.IdEstatus = e.IdEstatus;";
 $result = $conn->query($query);
 ?>
+<<<<<<< HEAD
 
 <style>
     /* Adjusted body padding to accommodate the header */
@@ -37,6 +38,8 @@ $result = $conn->query($query);
         background-color: #f2f2f2;
     }
 </style>
+=======
+>>>>>>> e71384a561ed0835e6fec7e2b9ac8a1538634f3d
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
@@ -52,8 +55,13 @@ $result = $conn->query($query);
                     <i class="fas fa-table me-1"></i>
                     Sucursales alojadas en la base de datos.
                 </div>
+<<<<<<< HEAD
                 <div class="">
                     <table>
+=======
+                <div class="card-body">
+                    <table id="datatablesSimple">
+>>>>>>> e71384a561ed0835e6fec7e2b9ac8a1538634f3d
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -91,7 +99,10 @@ $result = $conn->query($query);
                                     echo "<td>{$row['DescripcionEstatus']}</td>";
                                     echo "<td><a href='../Actualizar/EditarSucursal.php?id={$row['IdSucursal']}' class='btn btn-primary'>Editar</a></td>";
                                     echo "</tr>";
+<<<<<<< HEAD
                                     
+=======
+>>>>>>> e71384a561ed0835e6fec7e2b9ac8a1538634f3d
                                 }
                             } else {
                                 echo "<tr><td colspan='5'>No hay productos registrados.</td></tr>";

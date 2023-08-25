@@ -7,6 +7,7 @@ $query = "SELECT p.IdProducto, p.NombreProd, c.NombreCat, p.Precio, p.RutaImagen
           JOIN TCategorias c ON p.IdCategoria = c.IdCategoria";
 $result = $conn->query($query);
 ?>
+<<<<<<< HEAD
 <style>
     /* Adjusted body padding to accommodate the header */
     body {
@@ -36,6 +37,9 @@ $result = $conn->query($query);
         background-color: #f2f2f2;
     }
 </style>
+=======
+
+>>>>>>> e71384a561ed0835e6fec7e2b9ac8a1538634f3d
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
@@ -51,8 +55,14 @@ $result = $conn->query($query);
                     <i class="fas fa-table me-1"></i>
                     Productos alojados en la base de datos.
                 </div>
+<<<<<<< HEAD
                 <div class="">
                     <table>
+=======
+                <div class="card-body">
+              
+                    <table id="datatablesSimple">
+>>>>>>> e71384a561ed0835e6fec7e2b9ac8a1538634f3d
                         <thead>
                             <tr>
                                 <th>ID</th>
