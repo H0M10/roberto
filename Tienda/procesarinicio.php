@@ -1,7 +1,4 @@
-<?php require('./bd.php') ?>
-
-<?php
-require 'C:/xampp/htdocs/base_de_datos/database.php';
+<?php require 'C:/xampp/htdocs/base_de_datos/database.php';
 // Establecer la conexión a la base de datos
 $conn = new mysqli($servername, $username, $password, $dbname);
 
