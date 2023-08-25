@@ -67,7 +67,7 @@ $result = $conn->query($query);
                 echo "<td>{$row['NombreProd']}</td>";
                 echo "<td>{$row['NombreCat']}</td>";
                 echo "<td>{$row['Precio']}</td>";
-                echo "<td><img src=\"{$row['RutaImagen']}\" alt=\"Imagen del producto\" width=\"100\"></td>";
+                echo "<td><img src='../../img/{$row['RutaImagen']}' alt='{$row['NombreProd']}' width='50'></td>";
                 echo "</tr>";
             }
         } else {
