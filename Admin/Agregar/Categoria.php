@@ -1,3 +1,5 @@
+<?php require('../layout/header.php') ?>
+<?php require('../layout/database.php')?>
 <?php 
 
 require('../../../database.php');
@@ -111,3 +113,6 @@ $result = $conn->query($query);
 
 </body>
 </html>
+
+
+<?php require('../layout/footer.php')?>
