@@ -39,11 +39,11 @@ if ($resultado->num_rows > 0) {
         // Verificar el tipo de usuario y redirigir
         if ($usuario['IdTipo'] == 1) {
             // Usuario es administrador, redireccionar a la página de administrador
-            header('Location: http://localhost/T210/sweet/admin/index.php');
+            header('Location: http://localhost/roberto/Admin/Otros/index.php');
             exit;
         } elseif ($usuario['IdTipo'] == 3) {
             // Usuario es usuario normal, redireccionar a la página de usuario
-            header('Location: http://localhost/T210/sweet/pagina/index.php');
+            header('Location: http://localhost/roberto/Tienda/index.php');
             exit;
         } elseif ($usuario['IdTipo'] == 2) {
             // Usuario es empleado, redireccionar a la página de empleado
