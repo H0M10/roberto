@@ -1,7 +1,8 @@
+
 <?php require('../layout/header.php') ?>
 
 <?php 
-
+require 'C:/xampp/htdocs/base_de_datos/database.php';
 $mensaje = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -35,7 +36,6 @@ $result = $conn->query($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Categoría</title>
     <style>
         body {
             font-family: Arial, sans-serif;

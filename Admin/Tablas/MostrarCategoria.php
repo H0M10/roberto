@@ -1,51 +1,42 @@
 
+<?php require('../layout/header.php') ?>
+
 <?php 
-
-require('../../../database.php');
-
+require 'C:/xampp/htdocs/base_de_datos/database.php';
 $query = "SELECT IdCategoria, NombreCat, DescripcionCat, IdEstatus FROM TCategorias";
 $result = $conn->query($query);
-
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mostrar Categorías</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 50px;
-        }
+<style>
+    /* Adjusted body padding to accommodate the header */
+    body {
+        padding-top: 150px;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
 
-        th {
-            background-color: #333;
-            color: #fff;
-        }
+    th {
+        background-color: #333;
+        color: #fff;
+    }
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
-<body>
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
 
+<h2>Mis Categorías</h2>
 <table>
     <thead>
         <tr>
@@ -73,5 +64,9 @@ $result = $conn->query($query);
     </tbody>
 </table>
 
+
 </body>
 </html>
+
+
+<?php require('../layout/footer.php') ?>

@@ -15,7 +15,6 @@
 </head>
 
 <body class="sb-nav-fixed">
-
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
