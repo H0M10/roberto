@@ -23,10 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $numeros[] = (int)$partes[0];
             }
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> dfc5e0834effe5ccac14afce79ddea3d6d97da02
         $siguienteNumero = 1; // Valor por defecto si no hay imágenes
         if (!empty($numeros)) {  // Comprobamos que el array no esté vacío antes de llamar a max()
             $siguienteNumero = max($numeros) + 1;
@@ -155,8 +152,4 @@ $result = $conn->query($query);
 </html>
 
 
-<<<<<<< HEAD
 <?php require('../layout/footer.php') ?>
-=======
-<?php require('../layout/footer.php') ?>
->>>>>>> dfc5e0834effe5ccac14afce79ddea3d6d97da02
