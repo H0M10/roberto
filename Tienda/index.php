@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,7 +16,7 @@
             background-color: #343a40;
             padding: 0.5rem 1rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 0; /* Asegúrate de que no haya margen debajo de la barra de navegación */
+            margin-bottom: 0;
         }
         .navbar-brand {
             color: #ffffff;
@@ -48,18 +49,20 @@
         .sidebar .btn-danger:hover {
             background-color: #c82333;
         }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="#">ComponentSpace</a>
     </nav>
-    <div class="container-fluid p-0"> <!-- Elimina el margen y padding del container-fluid -->
-        <div class="row m-0"> <!-- Elimina el margen de la fila -->
-            <div class="col-md-3 p-0"> <!-- Elimina el padding de la columna -->
-                
+    <div class="container-fluid p-0">
+        <div class="row m-0">
+            <div class="col-md-3 p-0">
                 <div class="sidebar">
-                    <!-- Header (Sidebar) content -->
                     <h5>Menú</h5>
                     <ul class="list-unstyled">
                         <li class="mb-2"><button class="btn btn-primary btn-block">Iniciar Sesión</button></li>
@@ -67,13 +70,49 @@
                         <li class="mb-2"><button class="btn btn-primary btn-block">Carrito</button></li>
                         <li class="mb-2"><button class="btn btn-primary btn-block">Factura</button></li>
                         <li class="mb-2"><button class="btn btn-primary btn-block">Usuario</button></li>
+                        <li class="mb-2"><button class="btn btn-primary btn-block">Sucursal</button></li>
+
                         <li class="mb-2"><button class="btn btn-danger btn-block">Cerrar Sesión</button></li>
                     </ul>
                 </div>
-
-                <!-- Sidebar content (like categories) can be added here -->
                 <h5>Categorías</h5>
-                
+            </div>
+            <div class="col-md-9">
+                <?php
+                require 'C:/xampp/htdocs/base_de_datos/database.php';
+                $query = "SELECT * FROM TProductos";
+                $result = $conn->query($query);
+                $productos = [];
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        $productos[] = $row;
+                    }
+                }
+                ?>
+                <div class="container mt-4">
+                    <div class="row">
+                        <?php foreach($productos as $producto): ?>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <img src="<?php echo $producto['RutaImagen']; ?>" class="card-img-top" alt="<?php echo $producto['NombreProd']; ?>">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo $producto['NombreProd']; ?></h5>
+                                        <p class="card-text">$<?php echo $producto['Precio']; ?></p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Cantidad</span>
+                                            </div>
+                                            <input type="number" name="quant[<?php echo $producto['IdProducto']; ?>]" class="form-control" value="1" min="1">
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-block">Agregar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
