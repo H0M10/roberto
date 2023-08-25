@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $numeros[] = (int)$partes[0];
             }
         }
+
         $siguienteNumero = 1; // Valor por defecto si no hay imágenes
         if (!empty($numeros)) {  // Comprobamos que el array no esté vacío antes de llamar a max()
             $siguienteNumero = max($numeros) + 1;
