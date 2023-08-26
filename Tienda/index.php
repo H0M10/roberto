@@ -1,10 +1,40 @@
 
-<<<<<<< HEAD
-<?php session_start(); ?>
-=======
->>>>>>> e71384a561ed0835e6fec7e2b9ac8a1538634f3d
+<?php 
+session_start(); 
+require 'C:/xampp/htdocs/base_de_datos/database.php';
+
+// Si se seleccionó una categoría específica, se filtra por esa categoría. De lo contrario, se muestran todos los productos.
+if (isset($_GET['categoria'])) {
+    $queryProductos = "SELECT * FROM TProductos WHERE IdCategoria = " . $_GET['categoria'];
+} else {
+    $queryProductos = "SELECT * FROM TProductos";
+}
+
+$resultProductos = $conn->query($queryProductos);
+if (!$resultProductos) {
+    die("Error en la consulta: " . $conn->error);
+}
+$productos = [];
+if ($resultProductos->num_rows > 0) {
+    while($row = $resultProductos->fetch_assoc()) {
+        $productos[] = $row;
+    }
+}
+
+// Consulta para obtener las categorías
+$queryCategorias = "SELECT * FROM TCategorias";
+$resultCategorias = $conn->query($queryCategorias);
+$categorias = [];
+if ($resultCategorias->num_rows > 0) {
+    while($row = $resultCategorias->fetch_assoc()) {
+        $categorias[] = $row;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,40 +89,50 @@
         }
     </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="#">ComponentSpace</a>
-    </nav>
-    <div class="container-fluid p-0">
-        <div class="row m-0">
-            <div class="col-md-3 p-0">
-                <div class="sidebar">
-                    <h5>Menú</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><button class="btn btn-primary btn-block">Iniciar Sesión</button></li>
-                        <li class="mb-2"><button class="btn btn-primary btn-block">Categorías</button></li>
-                        <li class="mb-2"><button class="btn btn-primary btn-block">Carrito</button></li>
-                        <li class="mb-2"><button class="btn btn-primary btn-block">Factura</button></li>
-                        <li class="mb-2"><button class="btn btn-primary btn-block">Usuario</button></li>
-                        <li class="mb-2"><button class="btn btn-primary btn-block">Sucursal</button></li>
 
-                        <li class="mb-2"><button class="btn btn-danger btn-block">Cerrar Sesión</button></li>
-                    </ul>
-                </div>
-                <h5>Categorías</h5>
-            </div>
-            <div class="col-md-9">
-                <?php
-                require 'C:/xampp/htdocs/base_de_datos/database.php';
-                $query = "SELECT * FROM TProductos";
-                $result = $conn->query($query);
-                $productos = [];
-                if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        $productos[] = $row;
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">ComponentSpace</a>
+</nav>
+
+<div class="container-fluid p-0">
+    <div class="row m-0">
+        <div class="col-md-3 p-0">
+            <div class="sidebar">
+                <h5>Menú</h5>
+                <ul class="list-unstyled">
+                    <?php
+                    if (!isset($_SESSION['idusuario'])) {
+                        echo '<li class="mb-2"><button class="btn btn-primary btn-block" onclick="location.href=\'login.php\'">Iniciar Sesión</button></li>';
+                    } else {
+                        echo '<li class="mb-2"><button class="btn btn-primary btn-block">Carrito</button></li>';
+                        echo '<li class="mb-2"><button class="btn btn-primary btn-block">Factura</button></li>';
+                        echo '<li class="mb-2"><button class="btn btn-primary btn-block">Usuario</button></li>';
+                        echo '<li class="mb-2"><button class="btn btn-primary btn-block">Sucursal</button></li>';
+                        echo '<li class="mb-2"><button class="btn btn-danger btn-block" onclick="location.href=\'cerrar.php\'">Cerrar Sesión</button></li>';
                     }
-                }
-                ?>
+                    ?>
+                </ul>
+
+                <!-- Botón para mostrar todos los productos -->
+                <button onclick="location.href='?todos=1'">Todos los productos</button>
+
+                <!-- Botón desplegable de categorías -->
+                <button onclick="toggleDropdown()">Categorías</button>
+                <div id="dropdownMenu" style="display:none;">
+                    <?php foreach($categorias as $categoria): ?>
+                        <div>
+                            <a href="?categoria=<?php echo $categoria['IdCategoria']; ?>"><?php echo $categoria['NombreCat']; ?></a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-9">
+              
                 <div class="container mt-4">
                     <div class="row">
                         <?php foreach($productos as $producto): ?>
@@ -118,7 +158,24 @@
                     </div>
                 </div>
             </div>
-        </div>
     </div>
+</div>
+
+<script>
+    function toggleDropdown() {
+        var dropdown = document.getElementById('dropdownMenu');
+        if (dropdown.style.display === "none") {
+            dropdown.style.display = "block";
+        } else {
+            dropdown.style.display = "none";
+        }
+    }
+</script>
+
+<!-- Scripts de Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
