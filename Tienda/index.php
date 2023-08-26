@@ -189,7 +189,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['idusuario'])) {
                     } else {
                         echo '<li class="mb-2"><button class="btn btn-primary btn-block">Factura</button></li>';
                         echo '<li class="mb-2"><button class="btn btn-primary btn-block">Usuario</button></li>';
-                        echo '<li class="mb-2"><button class="btn btn-primary btn-block">Sucursal</button></li>';
                         echo '<li class="mb-2"><button class="btn btn-danger btn-block" onclick="location.href=\'cerrar.php\'">Cerrar Sesión</button></li>';
                      } ?>
                         <li class="mb-2">

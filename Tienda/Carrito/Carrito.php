@@ -1,4 +1,3 @@
-
 <?php
 
 require('../layout/header.php');
@@ -53,12 +52,10 @@ if ($result && mysqli_num_rows($result) > 0) {
     echo '</tr>';
     echo '</table>';
 
-    echo '<form action="paypall.php" method="post">';
-    echo '<input type="hidden" name="totalPrice" value="' . $totalPrice . '">';
-    echo '<button type="submit" class="btn">Finalizar Compra</button>';
-    echo '</form>';
-
+    // Add PayPal button container
+    echo '<div id="paypal-button-container"></div>';
     echo '</div>';
+
 } else {
     echo '<div class="cart-content empty-cart">';
     echo '<h2>Carrito de Compras</h2>';
@@ -67,7 +64,80 @@ if ($result && mysqli_num_rows($result) > 0) {
 }
 
 mysqli_close($conn);
-
 ?>
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=ASu9s-bv1_wUhqV3jNcTMEgpczcOh7EwQzyBVmazGRvit8j_wGw_s5euFuYLVNSAUwyBXjUvQVbBYBHV&currency=USD"></script>
+    <style>
+        .wrapper {
+            display: flex;
+        }
+        .checkout-column {
+            flex: 1;
+            padding: 20px;
+        }
+        .titulo-principal {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+      
+<div id="paypal-button-container"></div>
+    </div>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./js/carrito.js"></script>
+    <script src="./js/menu.js"></script>
+    <!-- PayPal Integration Script -->
+<!-- Include PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
+
+<script>
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        currency_code: 'USD',
+                        value: '<?php echo $totalPrice; ?>'
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+            // Aquí es donde se maneja la aprobación de la transacción por parte de PayPal
+
+            // Configuramos el indicador para procesar la venta y enviamos el formulario
+            var form = document.createElement('form');
+            form.method = 'post';
+            form.action = 'agregar.php'; // La página actual
+
+            var hiddenField = document.createElement('input');
+            hiddenField.type = 'hidden';
+            hiddenField.name = 'procesarVenta';
+            hiddenField.value = 'true';
+
+            form.appendChild(hiddenField);
+
+            // Enviamos el formulario para procesar la venta en el servidor
+            document.body.appendChild(form);
+            form.submit();
+        });
+    }
+    }).render('#paypal-button-container'); // Display the PayPal button in the container
+</script>
 
 <?php require('../layout/footer.php'); ?>
