@@ -83,68 +83,8 @@ $stmtDelete = $conn->prepare($deleteAllFromCarrito);
 $stmtDelete->bind_param("i", $carritoId);  // Aquí usamos el ID del carrito que ya hemos obtenido anteriormente
 $stmtDelete->execute();
 
+
 if ($stmtDelete->affected_rows > 0) {
-    ?>
-    <!DOCTYPE html>
-    <html lang="es">
-        
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <link rel="stylesheet" href="./css/main.css">
-        <title>Compra Exitosa</title>
-        <style>
-            body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Cambio aquí */
-    height: 100vh;
-    background-color: #4b33a8; /* Color de fondo morado */
-    padding-top: 50px; /* Espacio desde el inicio de la página */
+    echo "Compra exitosa";
 }
-
-            .success-message {
-                background-color: #4b33a8; /* Color de fondo morado */
-                padding: 20px;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-                color: white;
-                font-size: 24px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="success-message">
-            Compra exitosa, ¡felicidades!
-        </div>
-        <nav>
-            <ul>
-                <li>
-                <a class="boton-menu boton-volver" href="./index.php">
-                        <i class="bi bi-arrow-return-left"></i> Seguir comprando
-                    </a>
-                </li>
-                <li>
-                    <a class="boton-menu boton-carrito active" href="./carrito.php">
-                        <i class="bi bi-cart-fill"></i> Carrito
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </body>
-    </html>
-    <?php
-    exit();
-} else {
-    echo json_encode(["status" => "error", "message" => "Error al eliminar productos del carrito."]);
-}
-
-// ... (resto del código PHP sin cambios) ...
-
-$conn->close();
-
-echo json_encode(["status" => "success", "message" => "Venta procesada exitosamente."]);
 ?>
