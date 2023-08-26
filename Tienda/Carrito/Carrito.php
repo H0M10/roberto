@@ -2,102 +2,23 @@
 <?php require 'C:/xampp/htdocs/base_de_datos/database.php';?>
 
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f7f7f7;
-        margin: 0;
-        padding: 0;
-    }
 
-    .cart-content {
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin: 20px auto;
-        max-width: 800px;
-    }
-
-    h2 {
-        color: #333;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th,
-    td {
-        padding: 10px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    .product-image {
-        max-width: 80px;
-        height: auto;
-    }
-
-    .btn {
-        display: inline-block;
-        padding: 5px 10px;
-        background-color: #333;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
-    }
-
-    .btn-remove {
-        background-color: #e74c3c;
-    }
-
-    .empty-cart {
-        text-align: center;
-        padding: 40px;
-    }
-
-    .empty-cart h2 {
-        color: #333;
-    }
-
-    .empty-cart p {
-        color: #888;
-    }
-
-
-    form {
-        margin-top: 20px;
-    }
-</style>
 <?php
 
 
 if (isset($_SESSION['idusuario'])) {
     $idusuario = $_SESSION['idusuario'];
 
-    $sqlclie = "SELECT IdCliente FROM cliente WHERE IdUsuario = $idusuario";
-    $resultclie = $conn->query($sqlclie);
-
-    if ($resultclie && $resultclie->num_rows > 0) {
-        $row = $resultclie->fetch_assoc();
-        $idcliente = $row['IdCliente'];
 
         $sql = "SELECT p.NombreProd, p.IdProducto, p.RutaImagen, p.Precio, c.Cantidad, s.NombreSuc, v.IdUsuario, c.IdCarrito, c.IdEstatus
         FROM TProductos p
         INNER JOIN tdetallescarrito i ON p.IdProducto = i.IdProducto
-        INNER JOIN ventainventario c ON i.IdInventario = c.IdInventario
-        INNER JOIN sucursal s ON i.IdSucursal = s.IdSucursal
-        INNER JOIN venta v ON c.IdVenta = v.IdVenta
-        WHERE v.IdCliente = $idcliente AND v.IdEstatus = 2;";
+        INNER JOIN tsucursal s ON i.IdSucursal = s.IdSucursal
+        INNER JOIN tcarrito c ON c.IdCarrito = i.IdCarrito
+        WHERE c.IdUsuario = $idusuario AND c.IdEstatus = 3;";
 
         $result = $conn->query($sql);
-    }
+    
 
     if ($result && $result->num_rows > 0) {
 ?>
