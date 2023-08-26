@@ -46,8 +46,28 @@ if (isset($_SESSION['idusuario'])) {
             echo '<td>$' . $product["Precio"] * $product["Cantidad"] . '</td>';
             echo '</tr>';
 
+<<<<<<< HEAD
             $totalPrice += $product["Precio"] * $product["Cantidad"];
         }
+=======
+                foreach ($result->fetch_all(MYSQLI_ASSOC) as $product) {
+                    echo '<tr>';
+                    echo '<td><img src="assets/imagenes_sweet/' . $product["RutaImagen"] . '" alt="' . $product["NombreProd"] . '" class="product-image"></td>';
+                    echo '<td>' . $product["NombreProd"] . '</td>';
+                    echo '<td>' . $product["NombreSuc"] . '</td>';
+                    echo '<td>' . $product["Precio"] . '</td>';
+                    echo '<td>';
+                    echo '<form method="post" action="actualizar_cantidad.php">'; // Ajusta el archivo de destino del formulario
+                    echo '<input type="hidden" name="idproducto" value="' . $product["IdInventario"] . '">';
+                    echo '<input type="number" name="cantidad" value="' . $product["CantidadVenta"] . '" min="1" max="' . $product["Existencias"] . '">';
+                    echo '</td>';
+                    echo '<td>$' . $product["Precio"] * $product["CantidadVenta"] . '</td>';
+                    echo '<td>';
+                    echo '<button type="submit" name="guardar" class="btn" value="Guardar">Guardar</button>';
+                    echo '</form>';
+                    echo '<a href="quitar_producto.php?idproducto=' . $product["IdInventario"] . '&idventa=' . $product["IdVenta"] . '" class="btn btn-remove">Quitar</a>';
+                    echo '</td>';
+>>>>>>> 2f787beecf70f2dec114a48e5d58363e6bab948f
 
         echo '<tr>';
         echo '<td colspan="5"><strong>Total</strong></td>';
