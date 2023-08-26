@@ -4,6 +4,11 @@ require('../layout/header.php');
 require 'C:/xampp/htdocs/base_de_datos/database.php';
 
 echo '<p>ID del usuario: ' . $_SESSION['idusuario'] . '</p>';
+if (isset($_SESSION['mensaje_compra'])) {
+    echo $_SESSION['mensaje_compra'];
+    unset($_SESSION['mensaje_compra']);  // Esto es para eliminar el mensaje después de mostrarlo y evitar que se muestre nuevamente en recargas futuras.
+}
+
 
 // Connect to the database
 $conn = new mysqli($servername, $username, $password, $dbname);

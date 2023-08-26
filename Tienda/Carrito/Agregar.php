@@ -61,12 +61,9 @@ foreach ($carrito as $producto) {
     }
 }
 
-$totalVenta = array_sum(array_map(function($producto) {
-    return $producto['Precio'] * $producto['Cantidad'];
-}, $carrito));
 
 // Inserción en la tabla TVentas
-$queryVenta = "INSERT INTO TVentas (IdUsuario, MetodoPago, IdEstatus, Total) VALUES ('$userId', 1, 1, '$totalVenta')";
+$queryVenta = "INSERT INTO TVentas (IdUsuario, MetodoPago, IdEstatus, Total) VALUES ('$userId', 1, 1, 0)";
 $conn->query($queryVenta);
 $idVenta = $conn->insert_id;
 
@@ -86,5 +83,7 @@ $stmtDelete->execute();
 
 if ($stmtDelete->affected_rows > 0) {
     echo "Compra exitosa";
+    $_SESSION['mensaje_compra'] = "Compra exitosa";
+
 }
 ?>
