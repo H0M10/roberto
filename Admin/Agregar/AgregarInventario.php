@@ -5,14 +5,15 @@ require 'C:/xampp/htdocs/base_de_datos/database.php';
 $mensaje = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombreCat = $_POST['nombreCat'];
-    $descripcionCat = $_POST['descripcionCat'];
-    $idEstatus = $_POST['idEstatus'];
+    $producto = $_POST['producto'];
+    $sucursal = $_POST['sucursal'];
+    $cantidad = $_POST['cantidad'];
 
-    if (empty($nombreCat) || empty($idEstatus)) {
+    
+    if (empty($producto) || empty($sucursal)) {
         $mensaje = "Por favor, completa todos los campos obligatorios.";
     } else {
-        $stmt = $conn->prepare("INSERT INTO TCategorias (NombreCat, DescripcionCat, IdEstatus) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("UPDATE TInventario SET Sucursal = ?, IdEstatus = ? WHERE IdInventario = ?");
         $stmt->bind_param("ssi", $nombreCat, $descripcionCat, $idEstatus);
 
         if ($stmt->execute()) {
@@ -102,23 +103,40 @@ $result = $conn->query($query);
                     </div>
                 </div>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <label for="nombreCat">Nombre de la Categoría:</label>
-                    <input type="text" id="nombreCat" name="nombreCat" required>
+                    <label for="producto">Producto:</label>
+                    <select id="producto" name="producto" required>
+                        <option value="">Seleccionar</option>
 
-                    <label for="descripcionCat">Descripción:</label>
-                    <textarea id="descripcionCat" name="descripcionCat" rows="4"></textarea>
+                        <?php $sql = "SELECT * FROM TProductos";
 
-                    <label for="idEstatus">Estatus:</label>
-                    <select id="idEstatus" name="idEstatus">
-                        <?php
+                        $result = $conn->query($sql);
+
                         if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<option value='{$row['IdEstatus']}'>{$row['Descripcion']}</option>";
+                            while ($ciudad = $result->fetch_assoc()) {
+                                echo "<option value=\"" . $ciudad['IdProducto'] . "\">" . $ciudad['NombreProd'] . "</option>";
                             }
-                        }
-                        ?>
+                        } ?>
                     </select>
-                    <input type="submit" value="Agregar Categoría">
+
+                    <label for="sucursal">Sucrusal:</label>
+                    <select id="sucursal" name="sucursal" required>
+                        <option value="">Seleccionar</option>
+
+                        <?php $sql = "SELECT * FROM TSucursal";
+
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($ciudad = $result->fetch_assoc()) {
+                                echo "<option value=\"" . $ciudad['IdSucursal'] . "\">" . $ciudad['NombreSuc'] . "</option>";
+                            }
+                        } ?>
+                    </select>
+
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="number" name="cantidad" id="cantidad" min="1" required>
+                    <br><br>
+                    <input type="submit" value="Enviar">
                 </form>
             </div>
         </main>

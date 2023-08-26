@@ -2,7 +2,9 @@
 
 <?php
 require 'C:/xampp/htdocs/base_de_datos/database.php';
-$query = "SELECT IdCategoria, NombreCat, DescripcionCat, IdEstatus FROM TCategorias";
+$query = "SELECT c.IdCategoria, c.NombreCat, c.DescripcionCat, c.IdEstatus, e.Descripcion AS DescripcionEstatus
+FROM TCategorias AS c
+INNER JOIN TEstatus AS e ON c.IdEstatus = e.IdEstatus";
 $result = $conn->query($query);
 ?>
 <div id="layoutSidenav_content">
@@ -50,7 +52,7 @@ $result = $conn->query($query);
                                     echo "<td>{$row['IdCategoria']}</td>";
                                     echo "<td>{$row['NombreCat']}</td>";
                                     echo "<td>{$row['DescripcionCat']}</td>";
-                                    echo "<td>{$row['IdEstatus']}</td>";
+                                    echo "<td>{$row['DescripcionEstatus']}</td>";
                                     echo "<td><a href='../Actualizar/EditarCategoria.php?id={$row['IdCategoria']}' class='btn btn-primary'>Editar</a></td>";
                                     echo "</tr>";
                                 }

@@ -1,4 +1,3 @@
-
 <?php require('../layout/header.php') ?>
 <?php
 
@@ -37,40 +36,53 @@ $result_estatus = $conn->query($query_estatus);
 </style>
 
 <div id="successMessage">Sucursal agregada con éxito.</div>
-<form method="post">
-    <label for="nombreSuc">Nombre:</label>
-    <input type="text" name="nombreSuc" required>
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Agregar Sucursal</h1>
+            <ol class="breadcrumb mb-4">
+            </ol>
+            <div class="card mb-4">
+                <div class="card-body">
+                    Aqui podras agregar las sucursales existentes.
+                </div>
+            </div>
+            <form method="post">
+                <label for="nombreSuc">Nombre:</label>
+                <input type="text" name="nombreSuc" required>
 
-    <label for="telefonoSuc">Teléfono:</label>
-    <input type="text" name="telefonoSuc">
+                <label for="telefonoSuc">Teléfono:</label>
+                <input type="text" name="telefonoSuc">
 
-    <label for="direccionSuc">Dirección:</label>
-    <input type="text" name="direccionSuc">
+                <label for="direccionSuc">Dirección:</label>
+                <input type="text" name="direccionSuc">
 
-    <label for="emailSuc">Email:</label>
-    <input type="email" name="emailSuc">
+                <label for="emailSuc">Email:</label>
+                <input type="email" name="emailSuc">
 
-    <label for="idEstatus">Estatus:</label>
-    <select name="idEstatus">
-        <?php while($row = $result_estatus->fetch_assoc()): ?>
-            <option value="<?php echo $row['IdEstatus']; ?>"><?php echo $row['Descripcion']; ?></option>
-        <?php endwhile; ?>
-    </select>
+                <label for="idEstatus">Estatus:</label>
+                <select name="idEstatus">
+                    <?php while ($row = $result_estatus->fetch_assoc()) : ?>
+                        <option value="<?php echo $row['IdEstatus']; ?>"><?php echo $row['Descripcion']; ?></option>
+                    <?php endwhile; ?>
+                </select>
 
-    <input type="submit" value="Agregar">
-</form>
+                <input type="submit" value="Agregar">
+            </form>
 
-<script>
-    <?php if ($success): ?>
-        document.getElementById("successMessage").style.display = "block";
-        setTimeout(function() {
-            document.getElementById("successMessage").style.display = "none";
-        }, 3000);
-    <?php endif; ?>
-</script>
-
-
+            <script>
+                <?php if ($success) : ?>
+                    document.getElementById("successMessage").style.display = "block";
+                    setTimeout(function() {
+                        document.getElementById("successMessage").style.display = "none";
+                    }, 3000);
+                <?php endif; ?>
+            </script>
+        </div>
+    </main>
+</div>
 </body>
+
 </html>
 
 

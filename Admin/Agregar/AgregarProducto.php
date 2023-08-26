@@ -105,27 +105,23 @@ $result = $conn->query($query);
 </style>
 
 <body>
-
     <?php if ($mensaje) : ?>
         <p><?php echo $mensaje; ?></p>
     <?php endif; ?>
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Charts</h1>
+                <h1 class="mt-4">Agregar Productos</h1>
                 <ol class="breadcrumb mb-4">
-                    
                 </ol>
                 <div class="card mb-4">
                     <div class="card-body">
-                    Aqui podras agregar los productos.
+                        Aqui podras agregar los productos.
                     </div>
                 </div>
-
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
                     <label for="nombreProd">Nombre del Producto:</label>
                     <input type="text" id="nombreProd" name="nombreProd" required>
-
                     <label for="idCategoria">Categoría:</label>
                     <select id="idCategoria" name="idCategoria">
                         <?php
@@ -136,17 +132,15 @@ $result = $conn->query($query);
                         }
                         ?>
                     </select>
-
                     <label for="precio">Precio:</label>
                     <input type="number" id="precio" name="precio" step="0.01" required>
-
                     <label for="imagen">Imagen:</label>
                     <input type="file" id="imagen" name="imagen" accept=".jpg">
-
                     <input type="submit" value="Agregar Producto">
                 </form>
             </div>
         </main>
+    </div>
 </body>
 
 </html>
