@@ -41,9 +41,9 @@ if (isset($_SESSION['idusuario'])) {
 
                 foreach ($result->fetch_all(MYSQLI_ASSOC) as $product) {
                     echo '<tr>';
-                    echo '<td><img src="assets/imagenes_sweet/' . $product["Imagen"] . '" alt="' . $product["Nombre"] . '" class="product-image"></td>';
-                    echo '<td>' . $product["Nombre"] . '</td>';
-                    echo '<td>' . $product["Nombresucursal"] . '</td>';
+                    echo '<td><img src="assets/imagenes_sweet/' . $product["RutaImagen"] . '" alt="' . $product["NombreProd"] . '" class="product-image"></td>';
+                    echo '<td>' . $product["NombreProd"] . '</td>';
+                    echo '<td>' . $product["NombreSuc"] . '</td>';
                     echo '<td>' . $product["Precio"] . '</td>';
                     echo '<td>';
                     echo '<form method="post" action="actualizar_cantidad.php">'; // Ajusta el archivo de destino del formulario
