@@ -15,7 +15,7 @@ $usuario = $_SESSION['idusuario'];
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Direct SQL query to fetch cart details
-$sql = "SELECT v.IdVenta, MIN(v.FechaVenta) AS FechaPago, c.NombreUsu, c.ApellidoPUsu, c.ApellidoMUsu, SUM(v.Total) AS Total, s.NombreSuc 
+$sql = "SELECT v.IdVenta, MIN(v.FechaVenta) AS FechaPago, c.NombreUsu, c.ApellidoPUsu, c.ApellidoMUsu, v.Total, s.NombreSuc 
 FROM tventas v
 INNER JOIN tusuario c ON v.IdUsuario = c.IdUsuario
 INNER JOIN tdetallesventa i ON i.IdVenta = v.IdVenta
@@ -50,7 +50,7 @@ if ($result && mysqli_num_rows($result) > 0) {
         echo '<td>' . $product["NombreSuc"] . '</td>';
         echo '<td>$' . $product["Total"] . '</td>';
         echo '<td><a href="vercompra.php?idventa=' . $product["IdVenta"] . '" class="btn btn-primary">Ver</a></td>';
-        echo '<td><a href="vercompra.php?idventa=' . $product["IdVenta"] . '" class="btn btn-warning ml-2">Facturar</a></td>';
+        echo '<td><a href="formulariofact.php?idventa=' . $product["IdVenta"] . '" class="btn btn-warning ml-2">Facturar</a></td>';
         echo '</tr>';
 
     }

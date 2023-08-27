@@ -48,14 +48,7 @@ if ($result && mysqli_num_rows($result) > 0) {
         echo '<td>' . $product["Precio"] . '</td>';
         echo '<td>' . $product["Cantidad"] . '</td>';
         echo '<td>$' . $product["Precio"] * $product["Cantidad"] . '</td>';
-        echo '<form method="post" action="actualizar_cantidad.php">'; // Ajusta el archivo de destino del formulario
-        echo '<input type="hidden" name="idproducto" value="' . $product["IdProducto"] . '">';
-        echo '<input type="number" name="cantidad" value="' . $product["Cantidad"] . '" min="1" max="' . $product["Existencias"] . '">';
-        echo '</td>';
-        echo '<td>$' . $product["Precio"] * $product["CantidadVenta"] . '</td>';
-        echo '<td>';
-        echo '<button type="submit" name="guardar" class="btn" value="Guardar">Guardar</button>';
-        echo '</form>';
+       
         echo '<td><a href="quitar_producto.php?idproducto=' . $product["IdProducto"] . '&iddetallecarrito=' . $product["IdDetalleCarrito"] . '" class="btn btn-danger">Quitar</a></td>';
         echo '</tr>';
 
