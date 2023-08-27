@@ -54,7 +54,7 @@
                         }
 
                         // Modifica tu consulta para que coincida con los nombres de columna y las tablas correctas
-                        $sql = "SELECT v.IdVenta, MIN(v.FechaVenta) AS FechaPago, c.NombreUsu, c.ApellidoPUsu, c.ApellidoMUsu, SUM(v.Total) AS Total, s.NombreSuc 
+                        $sql = "SELECT v.IdVenta, MIN(v.FechaVenta) AS FechaPago, c.NombreUsu, c.ApellidoPUsu, c.ApellidoMUsu, v.Total AS Total, s.NombreSuc 
                         FROM tventas v
                         INNER JOIN tusuario c ON v.IdUsuario = c.IdUsuario
                         INNER JOIN tdetallesventa i ON i.IdVenta = v.IdVenta
