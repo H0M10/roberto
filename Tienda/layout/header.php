@@ -64,8 +64,8 @@ if ($resultCategorias->num_rows > 0) {
                     if (!isset($_SESSION['idusuario'])) {
                         echo '<li class="mb-2"><button class="btn btn-primary btn-block" onclick="location.href=\'login.php\'">Iniciar Sesión</button></li>';
                     } else {
-                        echo '<li class="mb-2"><button class="btn btn-primary btn-block">Carrito</button></li>';
-                        echo '<li class="mb-2"><button class="btn btn-primary btn-block">Factura</button></li>';
+                        echo '<li class="mb-2"><button class="btn btn-primary btn-block" onclick="location.href=\'./carrito.php\'">Carrito</button></li>';
+                        echo '<li class="mb-2"><button class="btn btn-primary btn-block" onclick="location.href=\'../Carrito/TablaFacturas.php.\'">Factura</button></li>';
                         echo '<li class="mb-2"><button class="btn btn-primary btn-block">Usuario</button></li>';
                         echo '<li class="mb-2"><button class="btn btn-danger btn-block" onclick="location.href=\'cerrar.php\'">Cerrar Sesión</button></li>';
                     }

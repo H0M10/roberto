@@ -180,12 +180,10 @@ $resultado = $conn->query($consulta);
  // Variable para almacenar la suma de los subtotales
 
 while ($fila = $resultado->fetch_assoc()) {
-    $subtotalTotal = 0;
 	$coste = ($fila['Precio']-($fila['Precio']*.16));
     $cantidadVenta = $fila['Cantidad'];
-    
-    $subtotal = $cantidadVenta * $coste; // Cálculo del subtotal para el producto actual
-    $subtotalTotal += $subtotal; // Suma del subtotal al total
+	$sub= $fila['Total'];
+    $subtotal = $sub - ($sub * .16); // Cálculo del subtotal para el producto actual // Suma del subtotal al total
     
     // Resto de tu código para mostrar o procesar cada producto y su subtotal
 }
@@ -197,7 +195,7 @@ while ($fila = $resultado->fetch_assoc()) {
 $pdf->Cell(100, 7, utf8_decode(''), 'T', 0, 'C');
 $pdf->Cell(15, 7, utf8_decode(''), 'T', 0, 'C');
 $pdf->Cell(32, 7, utf8_decode("SUBTOTAL"), 'T', 0, 'C');
-$pdf->Cell(34, 7, utf8_decode($subtotalTotal . " MXN"), 'T', 0, 'C');
+$pdf->Cell(34, 7, utf8_decode($subtotal . " MXN"), 'T', 0, 'C');
 
 $pdf->Ln(7);
 $consulta = "SELECT p.NombreProd as NombreP, p.IdProducto, p.Precio, dv.Cantidad, s.NombreSuc as Nombresucursal, v.IdUsuario, v.IdVenta, v.Total
@@ -237,14 +235,14 @@ $pdf->Cell(15, 7, utf8_decode(''), '', 0, 'C');
 
 
 $pdf->Cell(32, 7, utf8_decode("TOTAL A PAGAR"), 'T', 0, 'C');
-$pdf->Cell(34, 7, utf8_decode($total = $IVATOTAL + $subtotalTotal . " MXN"), 'T', 0, 'C');
+$pdf->Cell(34, 7, utf8_decode($total = $IVATOTAL + $subtotal . " MXN"), 'T', 0, 'C');
 
 $pdf->Ln(7);
 
 $pdf->Cell(100, 7, utf8_decode(''), '', 0, 'C');
 $pdf->Cell(15, 7, utf8_decode(''), '', 0, 'C');
 $pdf->Cell(32, 7, utf8_decode("TOTAL PAGADO"), '', 0, 'C');
-$pdf->Cell(34, 7, utf8_decode($$total = $IVATOTAL + $subtotalTotal  . " MXN"), '', 0, 'C');
+$pdf->Cell(34, 7, utf8_decode($$total = $IVATOTAL + $subtotal  . " MXN"), '', 0, 'C');
 
 $pdf->Ln(7);
 
