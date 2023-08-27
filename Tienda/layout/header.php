@@ -50,7 +50,7 @@ if ($resultCategorias->num_rows > 0) {
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">ComponentSpace</a>
+    <a class="navbar-brand" href="../../Tienda/index.php">Pet Milky Way</a>
 </nav>
 
 <div class="container-fluid p-0">
@@ -60,6 +60,7 @@ if ($resultCategorias->num_rows > 0) {
                 <h5>Menú</h5>
                 <ul class="list-unstyled">
                     <?php
+                     echo '<li class="mb-2"><button class="btn btn-primary btn-block" onclick="location.href=\'../../Tienda/index.php\'">Inicio</button></li>';
                     if (!isset($_SESSION['idusuario'])) {
                         echo '<li class="mb-2"><button class="btn btn-primary btn-block" onclick="location.href=\'login.php\'">Iniciar Sesión</button></li>';
                     } else {

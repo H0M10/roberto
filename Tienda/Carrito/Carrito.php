@@ -14,7 +14,7 @@ if (isset($_SESSION['mensaje_compra'])) {
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Direct SQL query to fetch cart details
-$sql = "SELECT p.NombreProd, p.IdProducto, p.RutaImagen, p.Precio, dc.Cantidad, s.NombreSuc
+$sql = "SELECT p.NombreProd, p.IdProducto, dc.IdDetalleCarrito, p.IdProducto, p.RutaImagen, p.Precio, dc.Cantidad, s.NombreSuc
         FROM TProductos p
         INNER JOIN TDetallesCarrito dc ON p.IdProducto = dc.IdProducto
         INNER JOIN TSucursal s ON dc.IdSucursal = s.IdSucursal
@@ -34,6 +34,8 @@ if ($result && mysqli_num_rows($result) > 0) {
     echo '<th>Precio</th>';
     echo '<th>Cantidad</th>';
     echo '<th>Total</th>';
+    echo '<th>Guardar</th>';
+    echo '<th>Eliminar</th>';
     echo '</tr>';
 
     $totalPrice = 0;
@@ -46,6 +48,15 @@ if ($result && mysqli_num_rows($result) > 0) {
         echo '<td>' . $product["Precio"] . '</td>';
         echo '<td>' . $product["Cantidad"] . '</td>';
         echo '<td>$' . $product["Precio"] * $product["Cantidad"] . '</td>';
+        echo '<form method="post" action="actualizar_cantidad.php">'; // Ajusta el archivo de destino del formulario
+        echo '<input type="hidden" name="idproducto" value="' . $product["IdProducto"] . '">';
+        echo '<input type="number" name="cantidad" value="' . $product["Cantidad"] . '" min="1" max="' . $product["Existencias"] . '">';
+        echo '</td>';
+        echo '<td>$' . $product["Precio"] * $product["CantidadVenta"] . '</td>';
+        echo '<td>';
+        echo '<button type="submit" name="guardar" class="btn" value="Guardar">Guardar</button>';
+        echo '</form>';
+        echo '<td><a href="quitar_producto.php?idproducto=' . $product["IdProducto"] . '&iddetallecarrito=' . $product["IdDetalleCarrito"] . '" class="btn btn-danger">Quitar</a></td>';
         echo '</tr>';
 
         $totalPrice += $product["Precio"] * $product["Cantidad"];
@@ -103,11 +114,11 @@ mysqli_close($conn);
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="./js/carrito.js"></script>
+    <script src="../layout/"></script>
     <script src="./js/menu.js"></script>
     <!-- PayPal Integration Script -->
 <!-- Include PayPal SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AeuTlbN2NF4to_A1egumMKvzhaGA523q77Ya4pQxAL98B1cO-M06f3mEZhzchOG1zHe7D2yFHf-_Epsz&currency=MXN"></script>
 
 <script>
     paypal.Buttons({
@@ -115,7 +126,7 @@ mysqli_close($conn);
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        currency_code: 'USD',
+                        currency_code: 'MXN',
                         value: '<?php echo $totalPrice; ?>'
                     }
                 }]

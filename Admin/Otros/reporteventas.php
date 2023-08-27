@@ -47,22 +47,21 @@
                                 $inicio = $_POST["inicio"];
                                 $fin = $_POST["fin"];
                                 // Escapa las variables para evitar inyección SQL y aplica el formato correcto para las fechas
-                                $inicio = mysqli_real_escape_string($conexion, $inicio); // Reemplaza $conexion con tu conexión a la base de datos
-                                $fin = mysqli_real_escape_string($conexion, $fin);       // Reemplaza $conexion con tu conexión a la base de datos
+                                $inicio = mysqli_real_escape_string($conn, $inicio); // Reemplaza $conexion con tu conexión a la base de datos
+                                $fin = mysqli_real_escape_string($conn, $fin);       // Reemplaza $conexion con tu conexión a la base de datos
                                 $whereConsulta = " WHERE p.FechaPago BETWEEN '$inicio' AND '$fin'"; // Agrega comillas simples alrededor de las fechas
                             }
                         }
 
                         // Modifica tu consulta para que coincida con los nombres de columna y las tablas correctas
-                        $sql = "SELECT v.IdVenta, MIN(p.FechaVenta) AS FechaPago, c.NombreUsu, c.ApellidoPUsu, c.ApellidoMUsu, SUM(p.Total) AS Total, s.NombreSuc 
-                    FROM tventas v
-                    INNER JOIN tusuario c ON v.IdUsuario = c.IdUsuario
-                    INNER JOIN tdetallesventa i ON i.IdVenta = v.IdVenta
-                    INNER JOIN inventario q ON i.IdInventario = q.IdInventario
-                    INNER JOIN sucursal s ON s.IdSucursal = q.IdSucursal
-                    INNER JOIN pago p ON v.IdVenta = p.IdVenta" . $whereConsulta . "
-                    AND v.IdEstatus = 3
-                    GROUP BY v.IdVenta, c.Nombre, c.ApellidoPc, c.ApellidoMc, s.Nombre";
+                        $sql = "SELECT v.IdVenta, MIN(v.FechaVenta) AS FechaPago, c.NombreUsu, c.ApellidoPUsu, c.ApellidoMUsu, SUM(v.Total) AS Total, s.NombreSuc 
+                        FROM tventas v
+                        INNER JOIN tusuario c ON v.IdUsuario = c.IdUsuario
+                        INNER JOIN tdetallesventa i ON i.IdVenta = v.IdVenta
+                     
+                        INNER JOIN tsucursal s ON s.IdSucursal = i.IdSucursal " . $whereConsulta . "
+                        AND v.IdEstatus = 1
+                        GROUP BY v.IdVenta, c.NombreUsu, c.ApellidoPUsu, c.ApellidoMUsu, s.NombreSuc";
 
 
 
@@ -75,8 +74,8 @@
                                 echo '<tr>
                             <td>' . $row["IdVenta"] . '</td>
                             <td>' . $row["FechaPago"] . '</td>
-                            <td>' . $row["Nombre"] . ' ' . $row["ApellidoPc"] . ' ' . $row["ApellidoMc"] . '</td>
-                            <td>' . $row["NombreSucursal"] . '</td>
+                            <td>' . $row["NombreUsu"] . ' ' . $row["ApellidoPUsu"] . ' ' . $row["ApellidoMUsu"] . '</td>
+                            <td>' . $row["NombreSuc"] . '</td>
                             <td>$' . $row["Total"] . '</td>
                         </tr>';
                                 $total += $row["Total"];

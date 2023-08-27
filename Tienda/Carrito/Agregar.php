@@ -16,7 +16,7 @@ if (!$resultSucursal || $resultSucursal->num_rows == 0) {
 }
 $sucursalSeleccionada = $resultSucursal->fetch_assoc()['IdSucursalSeleccionada'];
 // Obtener el IdCarrito del usuario
-$queryCarritoId = "SELECT IdCarrito FROM TCarrito WHERE IdUsuario = '$userId'";
+$queryCarritoId = "SELECT IdCarrito FROM TCarrito WHERE IdUsuario = $userId";
 $resultCarritoId = $conn->query($queryCarritoId);
 if (!$resultCarritoId || $resultCarritoId->num_rows == 0) {
     die("Error al obtener el carrito del usuario.");
@@ -24,7 +24,7 @@ if (!$resultCarritoId || $resultCarritoId->num_rows == 0) {
 $carritoId = $resultCarritoId->fetch_assoc()['IdCarrito'];
 
 // Consultar los detalles del carrito usando el IdCarrito
-$queryDetallesCarrito = "SELECT * FROM TDetallesCarrito WHERE IdCarrito = '$carritoId'";
+$queryDetallesCarrito = "SELECT * FROM TDetallesCarrito WHERE IdCarrito = $carritoId";
 $resultDetallesCarrito = $conn->query($queryDetallesCarrito);
 
 $carrito = [];
@@ -85,5 +85,9 @@ if ($stmtDelete->affected_rows > 0) {
     echo "Compra exitosa";
     $_SESSION['mensaje_compra'] = "Compra exitosa";
 
+    // Redireccionar a otra página
+    header('Location: ventaexitosa.php');
+    exit; // Asegurarse de que el script se detenga después de la redirección
 }
+
 ?>

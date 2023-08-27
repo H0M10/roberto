@@ -1,4 +1,3 @@
-
 <?php
 require 'C:/xampp/htdocs/base_de_datos/database.php';
 
@@ -19,8 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else if ($resultado->num_rows > 0) {
         $usuario = $resultado->fetch_assoc();
         
-        // Directly comparing the plaintext password
-        if ($input_password == $usuario['ContrasenaUsu']) {
+        $stored_password = $usuario['ContrasenaUsu']; // Obtén la contraseña almacenada
+        
+        // Verifica la contraseña utilizando password_verify
+        if (password_verify($input_password, $stored_password)) {
             session_start();
             $_SESSION['nombre_usuario'] = $usuario['NombreUsu'] . " " . $usuario['ApellidoPusu'];
             $_SESSION['idusuario'] = $usuario['IdUsuario'];
