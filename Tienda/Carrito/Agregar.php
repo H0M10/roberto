@@ -7,7 +7,6 @@ echo '<p>ID del usuario: ' . $_SESSION['idusuario'] . '</p>';
 
 $userId = $_SESSION['idusuario'];
 
-
 // Obtener la sucursal del usuario
 $querySucursal = "SELECT IdSucursalSeleccionada FROM TUsuario WHERE IdUsuario = '$userId'";
 $resultSucursal = $conn->query($querySucursal);
@@ -15,34 +14,27 @@ if (!$resultSucursal || $resultSucursal->num_rows == 0) {
     die("Error al obtener la sucursal del usuario.");
 }
 $sucursalSeleccionada = $resultSucursal->fetch_assoc()['IdSucursalSeleccionada'];
-// Obtener el IdCarrito del usuario
-$queryCarritoId = "SELECT IdCarrito FROM TCarrito WHERE IdUsuario = $userId";
-$resultCarritoId = $conn->query($queryCarritoId);
-if (!$resultCarritoId || $resultCarritoId->num_rows == 0) {
-    die("Error al obtener el carrito del usuario.");
-}
-$carritoId = $resultCarritoId->fetch_assoc()['IdCarrito'];
 
-// Consultar los detalles del carrito usando el IdCarrito
-$queryDetallesCarrito = "SELECT * FROM TDetallesCarrito WHERE IdCarrito = $carritoId";
+// Obtener los detalles del carrito y el precio de cada producto en una sola consulta
+$queryDetallesCarrito = "
+    SELECT dc.*, p.Precio 
+    FROM TDetallesCarrito dc 
+    JOIN TProductos p ON dc.IdProducto = p.IdProducto
+    WHERE dc.IdCarrito = (SELECT IdCarrito FROM TCarrito WHERE IdUsuario = '$userId')
+";
+
 $resultDetallesCarrito = $conn->query($queryDetallesCarrito);
 
-$carrito = [];
-while ($row = $resultDetallesCarrito->fetch_assoc()) {
-    $carrito[] = $row;
+if (!$resultDetallesCarrito) {
+    die("Error al obtener los detalles del carrito.");
 }
 
-// Enriquecer el carrito con los precios de los productos
-foreach ($carrito as &$producto) {
-    $queryPrecio = "SELECT Precio FROM TProductos WHERE IdProducto = '".$producto['IdProducto']."'";
-    $resultPrecio = $conn->query($queryPrecio);
-    if ($resultPrecio->num_rows > 0) {
-        $row = $resultPrecio->fetch_assoc();
-        $producto['Precio'] = $row['Precio'];
-    } else {
-        echo json_encode(["status" => "error", "message" => "Error al obtener el precio del producto " . $producto['IdProducto']]);
-        exit();
-    }
+$totalVenta = 0;
+$carrito = [];
+
+while ($row = $resultDetallesCarrito->fetch_assoc()) {
+    $carrito[] = $row;
+    $totalVenta += ($row['Precio'] * $row['Cantidad']);
 }
 
 // Verificar disponibilidad de productos en el inventario
@@ -60,10 +52,9 @@ foreach ($carrito as $producto) {
         exit();
     }
 }
-
-
+$totalVentafinal=$totalVenta/2;
 // Inserción en la tabla TVentas
-$queryVenta = "INSERT INTO TVentas (IdUsuario, MetodoPago, IdEstatus, Total) VALUES ('$userId', 1, 1, 0)";
+$queryVenta = "INSERT INTO TVentas (IdUsuario, MetodoPago, IdEstatus, Total) VALUES ('$userId', 1, 1, '0')";
 $conn->query($queryVenta);
 $idVenta = $conn->insert_id;
 
@@ -75,11 +66,12 @@ foreach ($carrito as $producto) {
 }
 
 // Después de procesar la venta, eliminar todos los productos del carrito del usuario
-$deleteAllFromCarrito = "DELETE FROM TDetallesCarrito WHERE IdCarrito = ?";
+$deleteAllFromCarrito = "DELETE FROM TDetallesCarrito WHERE IdCarrito = (SELECT IdCarrito FROM TCarrito WHERE IdUsuario = '$userId')";
 $stmtDelete = $conn->prepare($deleteAllFromCarrito);
-$stmtDelete->bind_param("i", $carritoId);  // Aquí usamos el ID del carrito que ya hemos obtenido anteriormente
 $stmtDelete->execute();
 
+
+echo json_encode(["status" => "success", "message" => "Venta procesada exitosamente."]);
 
 if ($stmtDelete->affected_rows > 0) {
     echo "Compra exitosa";
@@ -89,5 +81,7 @@ if ($stmtDelete->affected_rows > 0) {
     header('Location: ventaexitosa.php');
     exit; // Asegurarse de que el script se detenga después de la redirección
 }
+
+$conn->close();
 
 ?>
