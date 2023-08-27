@@ -4,7 +4,7 @@ session_start();
 require 'C:/xampp/htdocs/base_de_datos/database.php';
 
 // Comprueba si el usuario está logueado
-if(isset($_SESSION['idusuario'])) {
+if (isset($_SESSION['idusuario'])) {
     $userId = $_SESSION['idusuario'];
     $sucursalQuery = "SELECT IdSucursalSeleccionada FROM TUsuario WHERE IdUsuario = ?";
     $stmt = $conn->prepare($sucursalQuery);
@@ -147,66 +147,66 @@ if ($resultSucursales->num_rows > 0) {
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="./index.php">Pet Milky Way</a>
-        <?php if(isset($_SESSION['idusuario'])): ?>
-    <div>
-        <form method="post" id="seleccionarSucursalForm">
-            <select id="sucursalDropdown" name="sucursal_id" onchange="this.form.submit()">
-                <option value="">Selecciona una sucursal</option>
-                <?php foreach ($sucursales as $sucursal) : ?>
-                    <option value="<?php echo $sucursal['IdSucursal']; ?>" <?php echo ($sucursal['IdSucursal'] == $sucursalSeleccionada) ? 'selected' : ''; ?>>
-                        <?php echo $sucursal['NombreSuc']; ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </form>
-    </div>
-<?php endif; ?>
+        <?php if (isset($_SESSION['idusuario'])) : ?>
+            <div>
+                <form method="post" id="seleccionarSucursalForm">
+                    <select id="sucursalDropdown" name="sucursal_id" onchange="this.form.submit()">
+                        <option value="">Selecciona una sucursal</option>
+                        <?php foreach ($sucursales as $sucursal) : ?>
+                            <option value="<?php echo $sucursal['IdSucursal']; ?>" <?php echo ($sucursal['IdSucursal'] == $sucursalSeleccionada) ? 'selected' : ''; ?>>
+                                <?php echo $sucursal['NombreSuc']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </form>
+            </div>
+        <?php endif; ?>
 
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['idusuario'])) {
-    if (isset($_POST['sucursal_id'])) {
-        $sucursalId = $_POST['sucursal_id'];
-        $usuarioId = $_SESSION['idusuario'];
+        <?php
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['idusuario'])) {
+            if (isset($_POST['sucursal_id'])) {
+                $sucursalId = $_POST['sucursal_id'];
+                $usuarioId = $_SESSION['idusuario'];
 
-        // Eliminar los detalles del carrito relacionados con la sucursal anterior
-        $sqlEliminarDetallesCarrito = "DELETE FROM TDetallesCarrito WHERE IdCarrito IN (SELECT IdCarrito FROM TCarrito WHERE IdUsuario = ?) AND IdSucursal <> ?";
-        $stmtEliminarDetallesCarrito = $conn->prepare($sqlEliminarDetallesCarrito);
-        $stmtEliminarDetallesCarrito->bind_param("ii", $usuarioId, $sucursalId);
-        $stmtEliminarDetallesCarrito->execute();
-        $stmtEliminarDetallesCarrito->close();
+                // Eliminar los detalles del carrito relacionados con la sucursal anterior
+                $sqlEliminarDetallesCarrito = "DELETE FROM TDetallesCarrito WHERE IdCarrito IN (SELECT IdCarrito FROM TCarrito WHERE IdUsuario = ?) AND IdSucursal <> ?";
+                $stmtEliminarDetallesCarrito = $conn->prepare($sqlEliminarDetallesCarrito);
+                $stmtEliminarDetallesCarrito->bind_param("ii", $usuarioId, $sucursalId);
+                $stmtEliminarDetallesCarrito->execute();
+                $stmtEliminarDetallesCarrito->close();
 
-        // Realiza la consulta de actualización
-        $sqlActualizarSucursal = "UPDATE TUsuario SET IdSucursalSeleccionada = ? WHERE IdUsuario = ?";
-        $stmtActualizarSucursal = $conn->prepare($sqlActualizarSucursal);
-        $stmtActualizarSucursal->bind_param("ii", $sucursalId, $usuarioId);
+                // Realiza la consulta de actualización
+                $sqlActualizarSucursal = "UPDATE TUsuario SET IdSucursalSeleccionada = ? WHERE IdUsuario = ?";
+                $stmtActualizarSucursal = $conn->prepare($sqlActualizarSucursal);
+                $stmtActualizarSucursal->bind_param("ii", $sucursalId, $usuarioId);
 
-        if ($stmtActualizarSucursal->execute()) {
-            // Recargar la página para reflejar los cambios en los productos mostrados
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit;
-        } else {
-            echo '<script>alert("Error al actualizar la sucursal seleccionada.");</script>';
+                if ($stmtActualizarSucursal->execute()) {
+                    // Recargar la página para reflejar los cambios en los productos mostrados
+                    header("Location: " . $_SERVER['PHP_SELF']);
+                    exit;
+                } else {
+                    echo '<script>alert("Error al actualizar la sucursal seleccionada.");</script>';
+                }
+
+                $stmtActualizarSucursal->close();
+            }
         }
+        ?>
+        <?php if (isset($_SESSION['idusuario'])) : ?>
+            <!-- Botón desplegable de categorías -->
+            <button onclick="toggleDropdown()">Categorías</button>
 
-        $stmtActualizarSucursal->close();
-    }
-}
-?>
-       <?php if(isset($_SESSION['idusuario'])): ?>
-    <!-- Botón desplegable de categorías -->
-    <button onclick="toggleDropdown()">Categorías</button>
-
-    <div id="dropdownMenu" style="display:none;">
-        <select onchange="location = this.value;">
-            <option value="">Selecciona una categoría</option>
-            <?php foreach ($categorias as $categoria) : ?>
-                <option value="?categoria=<?php echo $categoria['IdCategoria']; ?>">
-                    <?php echo $categoria['NombreCat']; ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-<?php endif; ?>
+            <div id="dropdownMenu" style="display:none;">
+                <select onchange="location = this.value;">
+                    <option value="">Selecciona una categoría</option>
+                    <?php foreach ($categorias as $categoria) : ?>
+                        <option value="?categoria=<?php echo $categoria['IdCategoria']; ?>">
+                            <?php echo $categoria['NombreCat']; ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        <?php endif; ?>
 
     </nav>
 
@@ -219,15 +219,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['idusuario'])) {
                         <?php
                         echo '<li class="mb-2"><button class="btn btn-primary btn-block" onclick="location.href=\'./index.php\'">Inicio</button></li>';
                         if (!isset($_SESSION['idusuario'])) {
-                            echo '<li class="mb-2"><button class="btn btn-primary btn-block" onclick="location.href=\'login.php\'">Iniciar Sesión</button></li>';
+                            echo '<li class="mb-2"><button class="btn btn-primary btn-block" onclick="location.href=\'login.html\'">Iniciar Sesión</button></li>';
                         } else {
-                            
-                            echo '<li class="mb-2"><button class="btn btn-primary btn-block">Factura</button></li>';
-                            echo '<li class="mb-2"><button class="btn btn-primary btn-block">Usuario</button></li>';
+
+                            echo '<li class="mb-2"><button class="btn btn-primary btn-block" onclick="location.href=\'./Carrito/TablaFacturas.php.\'" >Compras</button></li>';
                             echo ' <li class="mb-2">
                         <button class="btn btn-primary btn-block" onclick="location.href=\'./Carrito/carrito.php\'">Carrito</button>
                     </li>';
-                            echo '<li class="mb-2"><button class="btn btn-danger btn-block" onclick="location.href=\'cerrar.php\'">Cerrar Sesión</button></li>';
+                            echo '<li class="mb-2"><button class="btn btn-primary btn-block">';
+                            // Muestra el nombre de usuario si está almacenado en la variable de sesión
+                            if (isset($_SESSION['nombre_usuario'])) {
+                                echo $_SESSION['nombre_usuario'];
+                            } else {
+                                echo "Usuario"; // Mensaje predeterminado si la sesión no contiene el nombre de usuario
+                            }
+
+                            echo  '</button></li>';
+
+                            echo '<li class="mb-2"><button class="btn btn-danger btn-block" onclick="location.href=\'./cerrar.php\'">Cerrar Sesión</button></li>';
                         } ?>
                     </ul>
 
