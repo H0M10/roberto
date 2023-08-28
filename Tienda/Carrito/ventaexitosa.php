@@ -22,7 +22,7 @@
 <div class="custom-center">
   <h1 class="card-title">Gracias por su pago</h1>
   <br><br>
-  <a href="formulario_fact.php" class="btn btn-primary">Generar factura</a>
+  <a href="formulariofact.php" class="btn btn-primary">Generar factura</a>
   <br>
   <a href="../index.php" class="btn btn-secondary">Seguir comprando</a>
 </div>

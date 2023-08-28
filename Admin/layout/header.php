@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+require 'C:/xampp/htdocs/base_de_datos/database.php';?>
+
+<?php if ($_SESSION['tipo'] !== '1') {
+    header("Location: /roberto/Tienda/index.php"); // Redirigir a la página de inicio de sesión
+    exit; // Asegurarse de que el script se detenga después de la redirección
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,7 +80,7 @@
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="../Tablas/MostrarInventarioPorProdcuto.php">Inventario</a>
+                                <a class="nav-link" href="../Tablas/MostrarInventarioPorProducto.php">Inventario</a>
                                 <a class="nav-link" href="../Tablas/MostrarProducto.php">Productos</a>
                                 <a class="nav-link" href="../Tablas/MostrarCategoria.php">Categoria</a>
                                 <a class="nav-link" href="../Tablas/MostrarSucursal.php">Sucursal</a>

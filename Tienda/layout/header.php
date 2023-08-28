@@ -3,6 +3,11 @@
 session_start(); 
 require 'C:/xampp/htdocs/base_de_datos/database.php';
 
+if (!isset($_SESSION['nombre_usuario'])) {
+    header("Location: /roberto/Tienda/index.php"); // Redirigir a la página de inicio de sesión
+    exit; // Asegurarse de que el script se detenga después de la redirección
+}
+
 // Si se seleccionó una categoría específica, se filtra por esa categoría. De lo contrario, se muestran todos los productos.
 if (isset($_GET['categoria'])) {
     $queryProductos = "SELECT * FROM TProductos WHERE IdCategoria = " . $_GET['categoria'];

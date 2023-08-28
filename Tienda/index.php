@@ -3,6 +3,7 @@
 session_start();
 require 'C:/xampp/htdocs/base_de_datos/database.php';
 
+
 // Comprueba si el usuario está logueado
 if (isset($_SESSION['idusuario'])) {
     $userId = $_SESSION['idusuario'];
