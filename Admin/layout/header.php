@@ -102,7 +102,6 @@ require 'C:/xampp/htdocs/base_de_datos/database.php';?>
                                 <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="../Agregar/AgregarProducto.php">Producto</a>
-                                        <a class="nav-link" href="../Agregar/AgregarInventario.php">Inventario</a>
                                         <a class="nav-link" href="../Agregar/AgregarCategoria.php">Categoria</a>
                                         <a class="nav-link" href="../Agregar/AgregarSucursal.php">Sucursal</a>
                                         <a class="nav-link" href="../Agregar/AgregarUsuario.php">Usuario</a>
