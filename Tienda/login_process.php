@@ -23,14 +23,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Verifica la contraseña utilizando password_verify
         if (password_verify($input_password, $stored_password)) {
             session_start();
-            $_SESSION['nombre_usuario'] = $usuario['NombreUsu'] . " " . $usuario['ApellidoPusu'];
+            $_SESSION['nombre_usuario'] = $usuario['NombreUsu'] . " " . $usuario['ApellidoPUsu'];
             $_SESSION['idusuario'] = $usuario['IdUsuario'];
             $_SESSION['tipo'] = $usuario['IdTipo'];
             
-            if ($usuario['IdTipo'] == 3) {
-                header('Location: index.php');
+            if ($usuario['IdTipo'] == 1) {
+                // Usuario es administrador, redireccionar a la página de administrador
+                header('Location: http://localhost/roberto/Admin/Otros/index.php');
+                exit;
+            } elseif ($usuario['IdTipo'] == 3) {
+                // Usuario es usuario normal, redireccionar a la página de usuario
+                header('Location: http://localhost/roberto/Tienda/index.php');
+                exit;
+            } elseif ($usuario['IdTipo'] == 2) {
+                // Usuario es empleado, redireccionar a la página de empleado
+                header('Location: /sweet/admin/VistaEmpP.php');
+                exit;
             } else {
-                header("Location: login_form.php?message=Usuario autenticado pero no tiene permisos para acceder a index.php");
+                // Tipo de usuario desconocido, redireccionar a la página de inicio
+                header('Location: index.php');
+                exit;
             }
         } else {
             header("Location: login_form.php?message=Contraseña incorrecta.");

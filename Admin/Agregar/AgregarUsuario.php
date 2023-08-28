@@ -11,16 +11,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $apellidoMUsu = $_POST['apellidoMUsu'];
     $correoUsu = $_POST['correoUsu'];
     $cuentaUsu = $_POST['cuentaUsu'];
-    $contrasenaUsu = $_POST['contrasenaUsu'];
+    $clave = $_POST['contrasenaUsu'];
     $direccionUsu = $_POST['direccionUsu'];
     $telefonoUsu = $_POST['telefonoUsu'];
     $generoUsu = $_POST['generoUsu'];
     $idEstatus = $_POST['idEstatus'];
 
+// Validar la contraseña utilizando una expresión regular
+$pattern = "/^(?=.*[A-Z])(?=.*[0-9]).{8,}$/"; // Al menos una mayúscula, un número y 8 caracteres en total
+
+if (!preg_match($pattern, $clave)) {
+    echo "<script>alert('La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula y un número.'); window.location.href = 'register.html';</script>";
+    exit;
+}
+
+// Encriptar la contraseña
+$hashedPassword = password_hash($clave, PASSWORD_DEFAULT);
 
 
     $stmt = $conn->prepare("INSERT INTO TUsuario (IdTipo, NombreUsu, ApellidoPUsu, ApellidoMUsu, CorreoUsu, CuentaUsu, ContrasenaUsu, DireccionUsu, TelefonoUsu, GeneroUsu, IdEstatus, FechaRegistroUsu, IdSucursalSeleccionada) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURDATE(), NULL)");
-    $stmt->bind_param("isssssssiss", $idTipo, $nombreUsu, $apellidoPUsu, $apellidoMUsu, $correoUsu, $cuentaUsu, $contrasenaUsu, $direccionUsu, $telefonoUsu, $generoUsu, $idEstatus);;
+    $stmt->bind_param("isssssssiss", $idTipo, $nombreUsu, $apellidoPUsu, $apellidoMUsu, $correoUsu, $cuentaUsu, $hashedPassword , $direccionUsu, $telefonoUsu, $generoUsu, $idEstatus);;
     $success = $stmt->execute();
 
     $success = $stmt->execute();
