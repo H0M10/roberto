@@ -32,11 +32,21 @@ if (isset($_GET['categoria'])) {
 
 $resultProductos = $conn->query($queryProductos);
 $productos = [];
-if ($resultProductos->num_rows > 0) {
-    while ($row = $resultProductos->fetch_assoc()) {
-        $productos[] = $row;
+
+if ($resultProductos !== false) {
+    if ($resultProductos->num_rows > 0) {
+        while ($row = $resultProductos->fetch_assoc()) {
+            $productos[] = $row;
+        }
     }
+} else {
+    // Puedes registrar el error en algún archivo de log si lo deseas.
+    error_log("Error en la consulta: " . $conn->error);
+    // Opcionalmente, puedes mostrar un mensaje de error amigable al usuario si lo prefieres.
+    // echo "Hubo un problema al recuperar los productos. Por favor, inténtalo más tarde.";
 }
+
+
 
 // Consulta para obtener las categorías
 $queryCategorias = "SELECT * FROM TCategorias";
