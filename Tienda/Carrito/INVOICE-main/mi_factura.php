@@ -28,9 +28,7 @@ if (isset($_POST['id_venta'])) {
     INNER JOIN tdetallesventa dv ON v.IdVenta = dv.IdVenta
     INNER JOIN tsucursal s ON dv.IdSucursal = s.IdSucursal
 	WHERE v.IdUsuario = $idusuario AND v.IdEstatus = 1 AND dv.IdVenta = $idVenta
-		 
 	GROUP BY p.NombreUsu, p.ApellidoPUsu, p.ApellidoMUsu, p.RFC, p.TelefonoUsu, p.DireccionUsu, p.CorreoUsu, s.NombreSuc, v.FechaVenta, dv.IdVenta";
-
 	$resultado = $conn->query($sql);
 	$fila = '';
 	if ($resultado) {
