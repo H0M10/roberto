@@ -20,7 +20,7 @@ FROM tventas v
 INNER JOIN tusuario c ON v.IdUsuario = c.IdUsuario
 INNER JOIN tdetallesventa i ON i.IdVenta = v.IdVenta
 INNER JOIN tsucursal s ON s.IdSucursal = i.IdSucursal
-WHERE v.IdUsuario = $usuario AND c.IdEstatus = 1
+WHERE v.IdUsuario = $usuario AND v.IdEstatus = 1
 GROUP BY v.IdVenta, c.NombreUsu, c.ApellidoPUsu, c.ApellidoMUsu, s.NombreSuc";
 
 $result = mysqli_query($conn, $sql);

@@ -24,7 +24,7 @@ $query = "
     INNER JOIN TProductos P ON DV.IdProducto = P.IdProducto
     INNER JOIN TVentas V ON DV.IdVenta = V.IdVenta
     INNER JOIN TSucursal S ON DV.IdSucursal = S.IdSucursal
-    WHERE DV.IdVenta = $idVenta;
+    WHERE DV.IdVenta = $idVenta AND v.IdUsuario = $userId;
 ";
 
 $result = $conn->query($query);
