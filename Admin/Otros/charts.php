@@ -1,5 +1,3 @@
-<?php require('../layout/header.php'); ?>
-
 <?php
 // Conexión a la base de datos
 require 'C:/xampp/htdocs/base_de_datos/database2.php';
@@ -26,11 +24,11 @@ $cantidad_por_fecha = $stmt3->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gráficas</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
       
-      .container {
+      .containercustom {
     border-radius: 10px;
     padding: 20px;
     display: flex;
@@ -54,7 +52,7 @@ $cantidad_por_fecha = $stmt3->fetchAll();
 </head>
 <body>
 
-<div class="container mt-4">
+<div class="containercustom mt-4">
     <div class="row mb-4">
         <div class="col-12 text-center">
         </div>
@@ -128,8 +126,3 @@ var chartCantidad = new Chart(ctx3, {
     }
 });
 </script>
-
-<?php require('../layout/footer.php'); ?>
-
-</body>
-</html>

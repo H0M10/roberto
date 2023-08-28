@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Dashboard - SB Admin</title>
+    <title>Administracion PMW</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="../layout/css/styles.css" rel="stylesheet" />
     <link href="../layout/css/tables.css" rel="stylesheet" />
@@ -17,32 +17,32 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand ps-3" href="../Otros/index.php">Pet Milky Way</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <?php
-                                    // Muestra el nombre de usuario si está almacenado en la variable de sesión
-                                    if (isset($_SESSION['nombre_usuario'])) {
-                                        echo $_SESSION['nombre_usuario'];
-                                    } else {
-                                        echo "Usuario"; // Mensaje predeterminado si la sesión no contiene el nombre de usuario
-                                    }
-                                    ?><i class="fas fa-user fa-fw"> </i></a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider" />
-                                    </li>
-                                    <li><a class="dropdown-item" href="../../Tienda/login.html">Logout</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <?php
+                    // Muestra el nombre de usuario si está almacenado en la variable de sesión
+                    if (isset($_SESSION['nombre_usuario'])) {
+                        echo $_SESSION['nombre_usuario'];
+                    } else {
+                        echo "Usuario"; // Mensaje predeterminado si la sesión no contiene el nombre de usuario
+                    }
+                    ?><i class="fas fa-user fa-fw"> </i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="../../Tienda/login.html">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -69,11 +69,12 @@
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-
+                                <a class="nav-link" href="../Tablas/MostrarInventarioPorProdcuto.php">Inventario</a>
                                 <a class="nav-link" href="../Tablas/MostrarProducto.php">Productos</a>
                                 <a class="nav-link" href="../Tablas/MostrarCategoria.php">Categoria</a>
                                 <a class="nav-link" href="../Tablas/MostrarSucursal.php">Sucursal</a>
                                 <a class="nav-link" href="../Tablas/MostrarUsuario.php">Usuarios</a>
+
                             </nav>
                         </div>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
@@ -94,6 +95,7 @@
                                 <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="../Agregar/AgregarProducto.php">Producto</a>
+                                        <a class="nav-link" href="../Agregar/AgregarInventario.php">Inventario</a>
                                         <a class="nav-link" href="../Agregar/AgregarCategoria.php">Categoria</a>
                                         <a class="nav-link" href="../Agregar/AgregarSucursal.php">Sucursal</a>
                                         <a class="nav-link" href="../Agregar/AgregarUsuario.php">Usuario</a>
