@@ -11,11 +11,7 @@ if (!isset($_SESSION['idusuario'])) {
 session_start();
 require 'C:/xampp/htdocs/base_de_datos/database.php';?>
 
-<?php if ($_SESSION['tipo'] === '3') {
-    header("Location: /roberto/Tienda/index.php"); // Redirigir a la página de inicio de sesión
-    exit; // Asegurarse de que el script se detenga después de la redirección
-}
-?>
+
 
 <!DOCTYPE html>
 <html lang="en">
