@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['idusuario'])) {
+    header("Location: ../../Tienda/login.html"); // Cambia "login.php" por la ruta de tu página de inicio de sesión
+    exit();
+}
+?>
+<?php
 
 session_start();
 require 'C:/xampp/htdocs/base_de_datos/database.php';?>

@@ -1,4 +1,3 @@
-
 <?php 
 session_start(); 
 require 'C:/xampp/htdocs/base_de_datos/database.php';
@@ -44,7 +43,7 @@ if ($resultCategorias->num_rows > 0) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ComponentSpace</title>
+    <title>Pet Milky Way</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
