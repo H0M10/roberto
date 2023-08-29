@@ -103,26 +103,27 @@ $stmt = $conn->prepare("UPDATE TInventario SET Cantidad = ? WHERE IdInventario =
     
 <label for="IdProducto">Selecciona un producto:</label>
 <select name="IdProducto">
-    <?php
-    $productos_query = $conn->query("SELECT IdProducto, NombreProd FROM TProductos");
-    while ($producto = $productos_query->fetch_assoc()) {
-        $selected = $inventario && $inventario['NombreProd'] == $producto['NombreProd'] ? "selected" : "";
-        echo "<option value='{$producto['IdProducto']}' $selected>{$producto['NombreProd']}</option>";
-    }
-    ?>
+<?php
+$productos_query = $conn->query("SELECT IdProducto, NombreProd FROM TProductos");
+while ($producto = $productos_query->fetch_assoc()) {
+    $selected = isset($idProducto) && $idProducto == $producto['IdProducto'] ? "selected" : "";
+    echo "<option value='{$producto['IdProducto']}' $selected>{$producto['NombreProd']}</option>";
+}
+?>
+
 </select>
 
 
     
 <label for="IdSucursal">Selecciona una sucursal:</label>
 <select name="IdSucursal">
-    <?php
-    $sucursales_query = $conn->query("SELECT IdSucursal, NombreSuc FROM TSucursal");
-    while ($sucursal = $sucursales_query->fetch_assoc()) {
-        $selected = $inventario && $inventario['NombreSuc'] == $sucursal['NombreSuc'] ? "selected" : "";
-        echo "<option value='{$sucursal['IdSucursal']}' $selected>{$sucursal['NombreSuc']}</option>";
-    }
-    ?>
+<?php
+$sucursales_query = $conn->query("SELECT IdSucursal, NombreSuc FROM TSucursal");
+while ($sucursal = $sucursales_query->fetch_assoc()) {
+    $selected = isset($idSucursal) && $idSucursal == $sucursal['IdSucursal'] ? "selected" : "";
+    echo "<option value='{$sucursal['IdSucursal']}' $selected>{$sucursal['NombreSuc']}</option>";
+}
+?>
 </select>
 
 
