@@ -34,7 +34,6 @@ if ($result && mysqli_num_rows($result) > 0) {
     echo '<th>Precio</th>';
     echo '<th>Cantidad</th>';
     echo '<th>Total</th>';
-    echo '<th>Guardar</th>';
     echo '<th>Eliminar</th>';
     echo '</tr>';
 
