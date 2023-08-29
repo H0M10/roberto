@@ -87,26 +87,29 @@ $conn->close();
         select {
             margin-bottom: 10px;
         }
-
+    
+        /* Additional styles for success message */
         #successMessage {
-            position: fixed;
-            top: 10%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-            display: none;
+            position: fixed;  /* Posición fija en la página */
+    top: 200px;  /* 200px desde la parte superior */
+    right: 20px;  /* 20px desde el lado derecho */
+            width: 200px;  /* Width of the message */
+            background-color: #4CAF50;  /* Green background */
+            color: white;  /* White text */
+            padding: 15px;  /* Internal padding */
+            border-radius: 4px;  /* Rounded borders */
+            display: none;  /* Initially hidden */
         }
     </style>
+    
 
 </head>
 
-<body>
 
+    <body>
 
-    <div id="successMessage">Producto actualizado</div>
+    <div id="successMessage">Producto actualizado con éxito</div>
+    
 
     <form action="EditarProducto.php" method="post">
         <label for="idProducto">Seleccionar Producto:</label>
@@ -129,19 +132,6 @@ $conn->close();
                 document.querySelector("[name='precio']").setAttribute("required", "");
             }
         </script>
-
-        <script>
-            function removeRequired() {
-                document.querySelector("[name='nombreProd']").removeAttribute("required");
-                document.querySelector("[name='precio']").removeAttribute("required");
-            }
-
-            function addRequired() {
-                document.querySelector("[name='nombreProd']").setAttribute("required", "");
-                document.querySelector("[name='precio']").setAttribute("required", "");
-            }
-        </script>
-
 
         <br><br>
 
@@ -167,16 +157,21 @@ $conn->close();
         <input type="submit" value="Actualizar" onclick="addRequiredForUpdate()">
     </form>
 
+
     <script>
         <?php if ($success) : ?>
+            // Show the success message
             document.getElementById("successMessage").style.display = "block";
+
+            // Hide the success message after 3 seconds
             setTimeout(function() {
                 document.getElementById("successMessage").style.display = "none";
             }, 3000);
         <?php endif; ?>
     </script>
 
-</body>
+    </body>
+    
 
 </html>
 
