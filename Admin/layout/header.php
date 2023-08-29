@@ -7,8 +7,6 @@ if (!isset($_SESSION['idusuario'])) {
 }
 ?>
 <?php
-
-session_start();
 require 'C:/xampp/htdocs/base_de_datos/database.php';?>
 
 
