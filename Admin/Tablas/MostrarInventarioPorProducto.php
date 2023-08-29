@@ -31,13 +31,18 @@ if (isset($_GET['action']) && $_GET['action'] == "show_all") {
                     <form method="GET" action="MostrarInventarioPorProducto.php">
                         <label for="IdProducto">Selecciona un producto:</label>
                         <select name="IdProducto">
-                            <?php
-                            $productos = $conn->query("SELECT IdProducto, NombreProd FROM TProductos");
-                            while ($row = $productos->fetch_assoc()) {
-                                echo "<option value='{$row['IdProducto']}'>{$row['NombreProd']}</option>";
-                            }
-                            ?>
-                        </select>
+    <?php
+    $productos = $conn->query("SELECT IdProducto, NombreProd FROM TProductos");
+    while ($row = $productos->fetch_assoc()) {
+        $selected = '';
+        if (isset($idProducto) && $row['IdProducto'] == $idProducto) {
+            $selected = 'selected';
+        }
+        echo "<option value='{$row['IdProducto']}' $selected>{$row['NombreProd']}</option>";
+    }
+    ?>
+</select>
+
                         <input type="submit" value="Cargar inventario">
                     </form>
                     <form method="GET" action="MostrarInventarioPorProducto.php">
