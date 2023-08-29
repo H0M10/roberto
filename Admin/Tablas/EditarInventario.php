@@ -6,6 +6,18 @@ require 'C:/xampp/htdocs/base_de_datos/database.php';
 $mensaje = '';
 $inventario = null;  // Initialize the variable to avoid undefined variable error
 
+// En la parte superior del archivo
+if (isset($_GET['IdInventario'])) {
+    $idInventario = $_GET['IdInventario'];
+    $query = "SELECT * FROM TInventario WHERE IdInventario = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $idInventario);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $inventario = $result->fetch_assoc();
+    $idProducto = $inventario['IdProducto'];
+    $idSucursal = $inventario['IdSucursal'];
+}
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
