@@ -48,7 +48,6 @@ if ($result && mysqli_num_rows($result) > 0) {
         echo '<td>' . $product["Cantidad"] . '</td>';
         echo '<td>$' . $product["Precio"] * $product["Cantidad"] . '</td>';
        
-        echo '<td><a href="quitar_producto.php?idproducto=' . $product["IdProducto"] . '&iddetallecarrito=' . $product["IdDetalleCarrito"] . '" class="btn btn-danger">Quitar</a></td>';
         echo '</tr>';
 
         $totalPrice += $product["Precio"] * $product["Cantidad"];

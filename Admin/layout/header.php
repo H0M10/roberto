@@ -52,7 +52,7 @@ require 'C:/xampp/htdocs/base_de_datos/database.php';?>
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="../../Tienda/login.html">Logout</a></li>
+                    <li><a class="dropdown-item" href="/roberto/tienda/cerrar.php">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -70,9 +70,13 @@ require 'C:/xampp/htdocs/base_de_datos/database.php';?>
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <a class="nav-link" href="../Otros/reporteventas.php">
+                        <a class="nav-link" href="../Otros/ventas.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Reporte Ventas
+                        </a>
+                        <a class="nav-link" href="../Otros/reporte_productos.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Reporte Total de productos vendidos
                         </a>
                         <div class="sb-sidenav-menu-heading">Gestion</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -113,17 +117,7 @@ require 'C:/xampp/htdocs/base_de_datos/database.php';?>
                                         <a class="nav-link" href="../Agregar/AgregarUsuario.php">Usuario</a>
                                     </nav>
                                 </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Tienda
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="login.html">Login</a>
-                                        <a class="nav-link" href="register.html">Register</a>
-                                        <a class="nav-link" href="password.html">Forgot Password</a>
-                                    </nav>
-                                </div>
+                                
                             </nav>
                         </div>
                     </div>
