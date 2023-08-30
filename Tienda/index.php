@@ -21,6 +21,8 @@ while ($row = $resultSucursales->fetch_assoc()) {
 }
 
 try {
+    $queryProductos = null; // Inicializamos como null
+
     // Si el usuario está logueado
     if (isset($_SESSION['idusuario'])) {
         $userId = $_SESSION['idusuario'];
@@ -36,28 +38,27 @@ try {
                 WHERE I.IdSucursal = $sucursalSeleccionada AND I.IdEstatus = 1";
         } else {
             $_SESSION['mensaje_sucursal'] = "El usuario no tiene una sucursal seleccionada.";
-            $queryProductos = "SELECT P.* FROM TProductos AS P";
         }
     } else {
         $queryProductos = "SELECT P.* FROM TProductos AS P";
     }
 
     // Si se seleccionó una categoría específica, se filtra por esa categoría
-    if (isset($_GET['categoria'])) {
+    if (isset($_GET['categoria']) && $queryProductos) {
         $categoriaId = intval($_GET['categoria']);
         $queryProductos .= " AND P.IdCategoria = $categoriaId";
     }
 
-    $resultProductos = $conn->query($queryProductos);
-    
-    while ($row = $resultProductos->fetch_assoc()) {
-        $productos[] = $row;
+    if ($queryProductos) {
+        $resultProductos = $conn->query($queryProductos);
+        
+        while ($row = $resultProductos->fetch_assoc()) {
+            $productos[] = $row;
+        }
     }
 } catch (Exception $e) {
     error_log("Error: " . $e->getMessage());
 }
-
-
 ?>
 
 
