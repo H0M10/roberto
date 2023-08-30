@@ -49,7 +49,7 @@ if ($resultclie && $resultclie->num_rows > 0) {
 
     <div class="custom-center">
         <p class="">Complete los siguientes campos para actualizar sus datos:</p>
-        <form action="formulariofact.php" method="POST">
+        <form action="./INVOICE-main/mi_factura.php" method="POST">
             <div class="mb-3">
                 <input type="text" id="nom_fact" class="form-control" placeholder="Nombre" name="nombre" value="<?php echo $Nombre; ?>" required>
             </div>
@@ -73,7 +73,7 @@ if ($resultclie && $resultclie->num_rows > 0) {
                 <input type="text" id="ciudad_fact" class="form-control" placeholder="Calle, Numero, Colonia, CP ..." name="direccion" value="<?php echo $Direccion; ?>" required>
             </div>
             <input type="hidden" name="idventa" value="<?php echo $idVenta;?>">
-            <button type="submit" name="guardar" id="guardar" class="btn btn-primary">Guardar</button>
+            <button type="submit" name="guardar" id="guardar" class="btn btn-primary">Generar Factura</button>
         </form>
     </div>
 <?php }

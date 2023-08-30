@@ -26,7 +26,7 @@
         <br><br>
         <div class="card mb-4">
             <div class="card-body">
-                <table id="datatablesSimple">
+                <table id="">
                     <thead>
                         <tr>
                             <th>No. Venta</th>
@@ -78,10 +78,11 @@
                             <td>' . $row["NombreSuc"] . '</td>
                             <td>$' . $row["Total"] . '</td>
                         </tr>';
-                                $total += $row["Total"];
+                        $total += $row["Total"];
                             }
+                            
                         }
-
+                            
                         $conn->close();
                         ?>
 

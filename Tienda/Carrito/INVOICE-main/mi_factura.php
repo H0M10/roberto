@@ -8,9 +8,18 @@ session_start();
 // Verifica si el usuario está autenticado y obtiene el ID de usuario de la sesión
 
 $idusuario = $_SESSION['idusuario'];
-if (isset($_POST['id_venta'])) {
-    $idVenta = $_POST['id_venta'];
 
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		require 'C:/xampp/htdocs/base_de_datos/database.php';
+		// Obtener los valores del formulario
+		$nombre = $_POST['nombre'];
+		$apellidoMaterno = $_POST['apellido_mat'];
+		$apellidoPaterno = $_POST['apellido_pat'];
+		$rfc = $_POST['rfc'];
+		$Email = $_POST['email'];
+		$telefono = $_POST['tel'];
+		$ciudad = $_POST['direccion'];
+		$idVenta = $_POST['idventa'];
     // Realiza las operaciones necesarias con el ID de la venta aquí
     // Por ejemplo, consulta la base de datos u otras acci
 } 
@@ -57,15 +66,15 @@ $pdf->Cell(150, 9, utf8_decode("RFC: " . "$rfc"), 0, 0, 'L');
 
 $pdf->Ln(5);
 
-$pdf->Cell(150, 9, utf8_decode($fila['DireccionUsu']), 0, 0, 'L');
+$pdf->Cell(150, 9, utf8_decode($ciudad), 0, 0, 'L');
 
 $pdf->Ln(5);
 
-$pdf->Cell(150, 9, utf8_decode($fila['TelefonoUsu']), 0, 0, 'L');
+$pdf->Cell(150, 9, utf8_decode($telefono), 0, 0, 'L');
 
 $pdf->Ln(5);
 
-$pdf->Cell(150, 9, utf8_decode("Email: " . $fila['CorreoUsu']), 0, 0, 'L');
+$pdf->Cell(150, 9, utf8_decode("Email: " . $Email), 0, 0, 'L');
 
 $pdf->Ln(10);
 
@@ -91,15 +100,15 @@ $pdf->SetFont('Arial', '', 10);
 $pdf->SetTextColor(39, 39, 51);
 $pdf->Cell(13, 7, utf8_decode("Cliente:"), 0, 0);
 $pdf->SetTextColor(97, 97, 97);
-$pdf->Cell(60, 7, utf8_decode($fila['NombreUsu']), 0, 0, 'L');
+$pdf->Cell(60, 7, utf8_decode($nombre), 0, 0, 'L');
 $pdf->SetTextColor(39, 39, 51);
 $pdf->Cell(8, 7, utf8_decode("RFC:  "), 0, 0, 'L');
 $pdf->SetTextColor(97, 97, 97);
-$pdf->Cell(60, 7, utf8_decode($fila['RFC']), 0, 0, 'L');
+$pdf->Cell(60, 7, utf8_decode($rfc), 0, 0, 'L');
 $pdf->SetTextColor(39, 39, 51);
 $pdf->Cell(7, 7, utf8_decode("Tel:"), 0, 0, 'L');
 $pdf->SetTextColor(97, 97, 97);
-$pdf->Cell(35, 7, utf8_decode($fila['TelefonoUsu']), 0, 0);
+$pdf->Cell(35, 7, utf8_decode($telefono), 0, 0);
 $pdf->SetTextColor(39, 39, 51);
 
 $pdf->Ln(7);
@@ -128,7 +137,6 @@ $pdf->Ln(8);
 
 $pdf->SetTextColor(39, 39, 51);
 
-$idVenta = $_POST['id_venta'];
 $usuario = $_SESSION['idusuario'];
 
 $consulta ="SELECT p.NombreProd as NombreP, p.IdProducto, p.Precio, dv.Cantidad, s.NombreSuc as Nombresucursal, v.IdUsuario, v.IdVenta, v.Total
