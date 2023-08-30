@@ -1,74 +1,65 @@
-<?php
 
+<?php
 session_start();
 require 'C:/xampp/htdocs/base_de_datos/database.php';
 
-
-// Comprueba si el usuario está logueado
-if (isset($_SESSION['idusuario'])) {
-    $userId = $_SESSION['idusuario'];
-    $sucursalQuery = "SELECT IdSucursalSeleccionada FROM TUsuario WHERE IdUsuario = ?";
-    $stmt = $conn->prepare($sucursalQuery);
-    $stmt->bind_param("i", $userId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $userData = $result->fetch_assoc();
-    $sucursalSeleccionada = $userData['IdSucursalSeleccionada'];
-
-    // Básicamente estamos obteniendo productos de la sucursal seleccionada con estatus 1
-    $queryProductos = "SELECT P.* 
-    FROM TProductos AS P
-    INNER JOIN TInventario AS I ON P.IdProducto = I.IdProducto
-    WHERE I.IdSucursal = $sucursalSeleccionada AND I.IdEstatus = 1";
-} else {
-    // Si el usuario no está logueado, muestra todos los productos
-    $queryProductos = "SELECT P.* FROM TProductos AS P";
-}
-
-// Si se seleccionó una categoría específica, se filtra por esa categoría
-if (isset($_GET['categoria'])) {
-    $categoriaId = $_GET['categoria'];
-    $queryProductos .= " AND P.IdCategoria = $categoriaId";
-}
-
-$resultProductos = $conn->query($queryProductos);
 $productos = [];
-
-if ($resultProductos !== false) {
-    if ($resultProductos->num_rows > 0) {
-        while ($row = $resultProductos->fetch_assoc()) {
-            $productos[] = $row;
-        }
-    }
-} else {
-    // Puedes registrar el error en algún archivo de log si lo deseas.
-    error_log("Error en la consulta: " . $conn->error);
-    // Opcionalmente, puedes mostrar un mensaje de error amigable al usuario si lo prefieres.
-    // echo "Hubo un problema al recuperar los productos. Por favor, inténtalo más tarde.";
-}
-
-
+$categorias = [];
+$sucursales = [];
+$sucursalSeleccionada = null;
 
 // Consulta para obtener las categorías
-$queryCategorias = "SELECT * FROM TCategorias";
-$resultCategorias = $conn->query($queryCategorias);
-$categorias = [];
-if ($resultCategorias->num_rows > 0) {
-    while ($row = $resultCategorias->fetch_assoc()) {
-        $categorias[] = $row;
-    }
+$resultCategorias = $conn->query("SELECT * FROM TCategorias");
+while ($row = $resultCategorias->fetch_assoc()) {
+    $categorias[] = $row;
 }
 
-$querySucursales = "SELECT IdSucursal, NombreSuc FROM TSucursal WHERE IdEstatus = 1";
-$resultSucursales = $conn->query($querySucursales);
-$sucursales = [];
-if ($resultSucursales->num_rows > 0) {
-    while ($row = $resultSucursales->fetch_assoc()) {
-        $sucursales[] = $row;
-    }
+// Consulta para obtener las sucursales
+$resultSucursales = $conn->query("SELECT IdSucursal, NombreSuc FROM TSucursal WHERE IdEstatus = 1");
+while ($row = $resultSucursales->fetch_assoc()) {
+    $sucursales[] = $row;
 }
+
+try {
+    // Si el usuario está logueado
+    if (isset($_SESSION['idusuario'])) {
+        $userId = $_SESSION['idusuario'];
+        $sucursalQuery = "SELECT IdSucursalSeleccionada FROM TUsuario WHERE IdUsuario = $userId";
+        $userData = $conn->query($sucursalQuery)->fetch_assoc();
+        $sucursalSeleccionada = $userData['IdSucursalSeleccionada'] ?? null;
+
+        // Si el usuario tiene una sucursal seleccionada
+        if ($sucursalSeleccionada) {
+            $queryProductos = "SELECT P.* 
+                FROM TProductos AS P
+                INNER JOIN TInventario AS I ON P.IdProducto = I.IdProducto
+                WHERE I.IdSucursal = $sucursalSeleccionada AND I.IdEstatus = 1";
+        } else {
+            $_SESSION['mensaje_sucursal'] = "El usuario no tiene una sucursal seleccionada.";
+            $queryProductos = "SELECT P.* FROM TProductos AS P";
+        }
+    } else {
+        $queryProductos = "SELECT P.* FROM TProductos AS P";
+    }
+
+    // Si se seleccionó una categoría específica, se filtra por esa categoría
+    if (isset($_GET['categoria'])) {
+        $categoriaId = intval($_GET['categoria']);
+        $queryProductos .= " AND P.IdCategoria = $categoriaId";
+    }
+
+    $resultProductos = $conn->query($queryProductos);
+    
+    while ($row = $resultProductos->fetch_assoc()) {
+        $productos[] = $row;
+    }
+} catch (Exception $e) {
+    error_log("Error: " . $e->getMessage());
+}
+
 
 ?>
+
 
 
 
