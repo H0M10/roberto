@@ -61,7 +61,7 @@ $pdf->Ln(9);
 
 $pdf->SetFont('Arial', '', 10);
 $pdf->SetTextColor(39, 39, 51);
-$rfc = $fila['RFC'];
+
 $pdf->Cell(150, 9, utf8_decode("RFC: " . "$rfc"), 0, 0, 'L');
 
 $pdf->Ln(5);
